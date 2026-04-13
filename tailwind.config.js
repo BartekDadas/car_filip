@@ -74,6 +74,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       fontWeight: {
@@ -86,6 +87,8 @@ export default {
         "fade-in": "fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
         "scale-in": "scaleIn 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
         "shimmer": "shimmer 2s infinite",
+        "slide-up": "slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+        "gold-glow": "goldGlow 2s ease-in-out infinite alternate",
       },
       keyframes: {
         fadeIn: {
@@ -99,6 +102,14 @@ export default {
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        slideUp: {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        goldGlow: {
+          "0%": { boxShadow: "0 0 5px rgba(198, 151, 49, 0.2)" },
+          "100%": { boxShadow: "0 0 20px rgba(198, 151, 49, 0.4)" },
         },
       },
       backdropBlur: {
