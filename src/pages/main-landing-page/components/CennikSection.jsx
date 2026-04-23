@@ -62,7 +62,7 @@ const CennikSection = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="text-center mb-16">
-                    <div className="gold-divider mb-6"></div>
+                    <div className="lux-divider mb-6"></div>
                     <h2 className="section-heading">Cennik</h2>
                     <p className="section-subheading">
                         Transparentne ceny bez ukrytych kosztów. Wybierz pakiet dopasowany do potrzeb Twojego auta.
@@ -76,14 +76,14 @@ const CennikSection = () => {
                         <div
                             key={index}
                             className={`relative bg-card rounded-2xl overflow-hidden smooth-transition hover-scale ${pkg.popular
-                                    ? 'ring-2 ring-primary'
+                                    ? 'ring-2 ring-primary shadow-[0_0_30px_rgba(226,232,240,0.1)]'
                                     : 'luxury-gradient-border'
                                 }`}
                         >
                             {/* Popular badge */}
                             {pkg.popular && (
                                 <div className="absolute top-0 right-0">
-                                    <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-6 py-1.5 text-xs font-semibold tracking-wide rounded-bl-xl">
+                                    <div className="bg-gradient-to-r from-primary via-white to-secondary text-primary-foreground px-6 py-1.5 text-[10px] font-bold tracking-[0.1em] rounded-bl-xl uppercase">
                                         Najpopularniejszy
                                     </div>
                                 </div>

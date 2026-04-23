@@ -34,7 +34,7 @@ const ProcessSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="gold-divider mb-6"></div>
+          <div className="lux-divider mb-6"></div>
           <h2 className="section-heading">Jak pracujemy</h2>
           <p className="section-subheading">
             Prosty, przejrzysty proces od pierwszego kontaktu do efektu końcowego.
@@ -45,7 +45,7 @@ const ProcessSection = () => {
         {/* Steps — Desktop */}
         <div className="hidden lg:grid lg:grid-cols-4 gap-0 relative">
           {/* Connecting line */}
-          <div className="absolute top-10 left-[12.5%] right-[12.5%] h-[1px] bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20"></div>
+          <div className="absolute top-10 left-[12.5%] right-[12.5%] h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
 
           {steps.map((step, index) => (
             <div key={index} className="relative text-center px-6">

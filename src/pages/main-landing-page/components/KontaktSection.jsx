@@ -13,8 +13,8 @@ const KontaktSection = () => {
         {
             icon: 'Mail',
             label: 'E-mail',
-            value: 'kontakt@goldenjazda.pl',
-            href: 'mailto:kontakt@goldenjazda.pl',
+            value: 'kontakt@velorautospa.pl',
+            href: 'mailto:kontakt@velorautospa.pl',
         },
         {
             icon: 'MapPin',
@@ -35,7 +35,7 @@ const KontaktSection = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="text-center mb-16">
-                    <div className="gold-divider mb-6"></div>
+                    <div className="lux-divider mb-6"></div>
                     <h2 className="section-heading">Skontaktuj się z nami</h2>
                     <p className="section-subheading">
                         Zadzwoń lub napisz — wycena jest bezpłatna i niezobowiązująca.
@@ -102,7 +102,7 @@ const KontaktSection = () => {
                         <Button
                             variant="outline"
                             size="xl"
-                            onClick={() => window.open('mailto:kontakt@goldenjazda.pl')}
+                            onClick={() => window.open('mailto:kontakt@velorautospa.pl')}
                             iconName="Mail"
                             iconPosition="left"
                             className="border-primary/40 text-foreground hover:bg-primary/10 hover:border-primary px-10"
@@ -116,8 +116,8 @@ const KontaktSection = () => {
                         <p className="text-sm text-text-secondary mb-4 font-sans">Śledź nas</p>
                         <div className="flex justify-center space-x-3">
                             {[
-                                { name: 'Instagram', icon: 'Instagram', href: 'https://instagram.com/goldenjazda' },
-                                { name: 'Facebook', icon: 'Facebook', href: 'https://facebook.com/goldenjazda' },
+                                { name: 'Instagram', icon: 'Instagram', href: 'https://instagram.com/velorautospa' },
+                                { name: 'Facebook', icon: 'Facebook', href: 'https://facebook.com/velorautospa' },
                             ].map((social) => (
                                 <a
                                     key={social.name}

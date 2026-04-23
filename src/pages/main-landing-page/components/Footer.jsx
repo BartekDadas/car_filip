@@ -13,8 +13,8 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: 'Instagram', icon: 'Instagram', href: 'https://instagram.com/goldenjazda' },
-    { name: 'Facebook', icon: 'Facebook', href: 'https://facebook.com/goldenjazda' },
+    { name: 'Instagram', icon: 'Instagram', href: 'https://instagram.com/velorautospa' },
+    { name: 'Facebook', icon: 'Facebook', href: 'https://facebook.com/velorautospa' },
   ];
 
   const scrollToSection = (sectionId) => {
@@ -35,8 +35,8 @@ const Footer = () => {
               <div className="mb-5">
                 <img
                   src="/assets/logo.png"
-                  alt="DS Car Detailing"
-                  className="h-24 lg:h-32 w-auto"
+                  alt="Velor Auto Spa"
+                  className="h-36 lg:h-44 w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
                 />
               </div>
               <p className="text-text-secondary text-sm leading-relaxed font-sans mb-5">
@@ -107,11 +107,11 @@ const Footer = () => {
                   <span>+48 123 456 789</span>
                 </a>
                 <a
-                  href="mailto:kontakt@goldenjazda.pl"
+                  href="mailto:kontakt@velorautospa.pl"
                   className="flex items-center space-x-3 text-text-secondary hover:text-primary smooth-transition"
                 >
                   <Icon name="Mail" size={16} />
-                  <span>kontakt@goldenjazda.pl</span>
+                  <span>kontakt@velorautospa.pl</span>
                 </a>
                 <div className="flex items-start space-x-3 text-text-secondary">
                   <Icon name="MapPin" size={16} className="mt-0.5 flex-shrink-0" />
@@ -133,7 +133,7 @@ const Footer = () => {
         <div className="border-t border-border py-6">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
             <div className="text-text-secondary text-xs font-sans">
-              © {currentYear} GoldenJazda. Wszelkie prawa zastrzeżone.
+              © {currentYear} Velor Auto Spa. Wszelkie prawa zastrzeżone.
             </div>
             <div className="flex items-center space-x-6 text-xs font-sans">
               <a href="#" className="text-text-secondary hover:text-primary smooth-transition">

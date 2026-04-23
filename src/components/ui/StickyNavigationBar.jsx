@@ -52,7 +52,63 @@ const StickyNavigationBar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-100 smooth-transition ${isScrolled ? 'bg-background/95 backdrop-blur-md luxury-shadow' : 'bg-transparent'
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24 lg:h-32">
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center justify-between h-52">
+          {/* Left Links */}
+          <div className="flex items-center space-x-4 flex-1">
+            {sections.slice(0, 2).map((section) => (
+              <button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
+                  ? 'text-primary bg-primary/10'
+                  : 'text-text-secondary hover:text-foreground hover:bg-white/5'
+                  }`}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Center Logo */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center hover-scale mx-8"
+          >
+            <img
+              src="/assets/logo.png"
+              alt="Velor Auto Spa"
+              className="h-44 w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
+            />
+          </button>
+
+          {/* Right Links + Phone */}
+          <div className="flex items-center justify-end space-x-4 flex-1">
+            {sections.slice(2).map((section) => (
+              <button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
+                  ? 'text-primary bg-primary/10'
+                  : 'text-text-secondary hover:text-foreground hover:bg-white/5'
+                  }`}
+              >
+                {section.label}
+              </button>
+            ))}
+            <div className="h-4 w-[1px] bg-border mx-2"></div>
+            <a
+              href="tel:+48123456789"
+              className="flex items-center space-x-2 text-text-secondary hover:text-primary smooth-transition"
+            >
+              <Icon name="Phone" size={16} />
+              <span className="text-sm font-medium whitespace-nowrap">+48 123 456 789</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="flex items-center justify-between h-44 lg:hidden">
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -60,41 +116,12 @@ const StickyNavigationBar = () => {
           >
             <img
               src="/assets/logo.png"
-              alt="DS Car Detailing"
-              className="h-20 lg:h-28 w-auto"
+              alt="Velor Auto Spa"
+              className="h-36 w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
             />
           </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <div className="flex items-center space-x-1">
-              {sections.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
-                    ? 'text-primary bg-primary/10'
-                    : 'text-text-secondary hover:text-foreground hover:bg-white/5'
-                    }`}
-                >
-                  {section.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Phone */}
-            <a
-              href="tel:+48123456789"
-              className="flex items-center space-x-2 text-text-secondary hover:text-primary smooth-transition"
-            >
-              <Icon name="Phone" size={16} />
-              <span className="text-sm font-medium">+48 123 456 789</span>
-            </a>
-          </div>
-
-
-          {/* Mobile */}
-          <div className="flex items-center space-x-3 lg:hidden">
+          <div className="flex items-center space-x-3">
             <Button
               variant="default"
               size="sm"

@@ -64,15 +64,15 @@ const HeroSection = () => {
         {/* Multi-layer overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/20 to-background/40"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30"></div>
-        {/* Subtle gold accent glow */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl"></div>
+        {/* Subtle silver accent glow */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[120px] opacity-50"></div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
         <div className="max-w-4xl mx-auto">
-          {/* Gold decorative line */}
-          <div className="gold-divider mb-8"></div>
+          {/* Silver decorative line */}
+          <div className="lux-divider mb-8"></div>
 
           {/* Overline */}
           <p className="text-primary text-sm sm:text-base font-medium tracking-[0.2em] uppercase mb-6 font-sans">
@@ -80,9 +80,9 @@ const HeroSection = () => {
           </p>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-[1.1] tracking-tight">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-[1.1] tracking-tight uppercase">
             Perfekcja{' '}
-            <span className="text-transparent bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text">
+            <span className="text-transparent bg-gradient-to-r from-primary via-white to-secondary bg-clip-text">
               w Każdym
             </span>
             <br />

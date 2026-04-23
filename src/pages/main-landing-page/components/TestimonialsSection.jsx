@@ -52,7 +52,7 @@ const OpinieSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="gold-divider mb-6"></div>
+          <div className="lux-divider mb-6"></div>
           <h2 className="section-heading">Opinie klientów</h2>
           <p className="section-subheading">
             Zaufali nam właściciele setek aut. Oto co mówią o naszej pracy.

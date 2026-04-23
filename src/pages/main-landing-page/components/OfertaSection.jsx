@@ -40,7 +40,7 @@ const OfertaSection = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
                 <div className="text-center mb-16">
-                    <div className="gold-divider mb-6"></div>
+                    <div className="lux-divider mb-6"></div>
                     <h2 className="section-heading">Co oferujemy</h2>
                     <p className="section-subheading">
                         Profesjonalne usługi detailingu samochodowego. Każda realizacja to indywidualne podejście
