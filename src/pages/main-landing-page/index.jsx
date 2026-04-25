@@ -1,15 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import StickyNavigationBar from '../../components/ui/StickyNavigationBar';
 import HeroSection from './components/HeroSection';
 import OfertaSection from './components/OfertaSection';
 import ProcessSection from './components/ProcessSection';
 import CennikSection from './components/CennikSection';
 import BeforeAfterSection from './components/BeforeAfterSection';
-import OpinieSection from './components/TestimonialsSection';
 import KontaktSection from './components/KontaktSection';
 import Footer from './components/Footer';
 
 const MainLandingPage = () => {
+  const [showUI, setShowUI] = useState(false);
+  const [showNaszaPraca, setShowNaszaPraca] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(false);
+
+  useEffect(() => {
+    const isReturningUser = localStorage.getItem('visited') === 'true';
+    if (isReturningUser) {
+      setShowUI(true);
+      setShowNaszaPraca(true);
+    } else {
+      setIsNewUser(true);
+      localStorage.setItem('visited', 'true');
+      const timerNaszaPraca = setTimeout(() => setShowNaszaPraca(true), 3000);
+      const timerUI = setTimeout(() => setShowUI(true), 4000);
+      return () => {
+        clearTimeout(timerNaszaPraca);
+        clearTimeout(timerUI);
+      };
+    }
+  }, []);
+
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
@@ -37,13 +57,12 @@ const MainLandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <StickyNavigationBar />
-      <HeroSection />
+      <StickyNavigationBar showUI={showUI} />
+      <HeroSection showUI={showUI} showNaszaPraca={showNaszaPraca} isNewUser={isNewUser} />
       <OfertaSection />
       <ProcessSection />
       <CennikSection />
-      <BeforeAfterSection />
-      <OpinieSection />
+      <BeforeAfterSection isNewUser={isNewUser} />
       <KontaktSection />
       <Footer />
     </div>

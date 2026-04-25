@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Button from '../../../components/ui/Button';
 
-const HeroSection = () => {
+const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }) => {
   const [videoSrc, setVideoSrc] = useState('/long.mp4');
   const [videoError, setVideoError] = useState(null);
   const videoRef = useRef(null);
+  const [offerPressed, setOfferPressed] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -29,6 +30,16 @@ const HeroSection = () => {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleWycenaClick = () => {
+    const el = document.getElementById('portfolio');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        window.dispatchEvent(new Event('openContactModal'));
+      }, 800);
+    }
+  };
+
   const handleVideoError = (e) => {
     console.error('Video error:', e);
     setVideoError('Video failed to load');
@@ -42,7 +53,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-x-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <video
@@ -54,7 +65,7 @@ const HeroSection = () => {
           muted
           playsInline
           preload="metadata"
-          poster="https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg"
+          poster="/first-frame.png"
           aria-hidden="true"
           onError={handleVideoError}
           onEnded={handleVideoEnded}
@@ -69,18 +80,19 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-24 sm:py-32">
         <div className="max-w-4xl mx-auto">
-          {/* Silver decorative line */}
+          <div className={`transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            {/* Silver decorative line */}
           <div className="lux-divider mb-8"></div>
 
           {/* Overline */}
-          <p className="text-primary text-sm sm:text-base font-medium tracking-[0.2em] uppercase mb-6 font-sans">
+          <p className="text-primary text-xs sm:text-base font-medium tracking-[0.2em] uppercase mb-4 sm:mb-6 font-sans">
             Premium Detailing Samochodowy
           </p>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-[1.1] tracking-tight uppercase">
+          <h1 className="text-2xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-4 sm:mb-6 leading-[1.1] tracking-tight uppercase px-2">
             Perfekcja{' '}
             <span className="text-transparent bg-gradient-to-r from-primary via-white to-secondary bg-clip-text">
               w Każdym
@@ -90,52 +102,139 @@ const HeroSection = () => {
           </h1>
 
           {/* Sub-headline */}
-          <p className="text-lg sm:text-xl text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed font-sans">
+          <p className="text-sm sm:text-xl text-text-secondary mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed font-sans px-2">
             Przywracamy lakierowi salonowy połysk. Profesjonalna korekta, powłoki ceramiczne
             i kompleksowy detailing — dla tych, którzy oczekują więcej.
           </p>
 
-          {/* CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button
-              variant="default"
-              size="xl"
-              onClick={scrollToContact}
-              iconName="ArrowRight"
-              iconPosition="right"
-              className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-10 py-4 text-lg"
-            >
-              Umów bezpłatną wycenę
-            </Button>
+          </div>
 
-            <Button
-              variant="outline"
-              size="xl"
-              onClick={() => {
-                const el = document.getElementById('oferta');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              iconName="ChevronDown"
-              iconPosition="right"
-              className="border-primary/40 text-foreground hover:bg-primary/10 hover:border-primary px-10 py-4 text-lg"
-            >
-              Zobacz ofertę
-            </Button>
+          {/* CTA */}
+          <div className="flex flex-col items-center justify-center gap-4 px-3 sm:px-0 w-full max-w-sm sm:max-w-none mx-auto">
+            {!isNewUser && (
+              <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 w-full transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                <Button
+                  variant="default"
+                  size="xl"
+                  onClick={(e) => {
+                    const btn = e.currentTarget;
+                    handleWycenaClick();
+                    window.setTimeout(() => {
+                      btn.blur();
+                    }, 180);
+                  }}
+                  onMouseUp={(e) => e.currentTarget.blur()}
+                  onTouchEnd={(e) => {
+                    window.setTimeout(() => {
+                      e.currentTarget.blur();
+                    }, 180);
+                  }}
+                  iconName="ArrowRight"
+                  iconPosition="right"
+                  className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-6 sm:px-10 py-4 text-base sm:text-lg w-full sm:w-auto break-words"
+                >
+                  Napisz o darmową wycenę
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="xl"
+                  onClick={(e) => {
+                    const btn = e.currentTarget;
+
+                    setOfferPressed(true);
+
+                    const el = document.getElementById('oferta');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+
+                    window.setTimeout(() => {
+                      setOfferPressed(false);
+
+                      btn.blur();
+
+                      if (document.activeElement instanceof HTMLElement) {
+                        document.activeElement.blur();
+                      }
+                    }, 250);
+                  }}
+                  onMouseUp={(e) => {
+                    e.currentTarget.blur();
+                  }}
+                  onTouchEnd={(e) => {
+                    const btn = e.currentTarget;
+
+                    window.setTimeout(() => {
+                      setOfferPressed(false);
+                      btn.blur();
+
+                      if (document.activeElement instanceof HTMLElement) {
+                        document.activeElement.blur();
+                      }
+                    }, 250);
+                  }}
+                  iconName="ChevronDown"
+                  iconPosition="right"
+                  className={`
+                    border-primary/40
+                    hover:bg-primary/10
+                    hover:border-primary
+
+                    focus:!text-foreground
+                    focus-visible:!text-foreground
+                    hover:!text-foreground
+
+                    px-6 sm:px-10 py-4
+                    text-base sm:text-lg
+                    w-full sm:w-auto
+                    break-words
+
+                    ${offerPressed ? '!text-black' : '!text-foreground'}
+                  `}
+                >
+                  Zobacz ofertę
+                </Button>
+              </div>
+            )}
+            {isNewUser && (
+              <div className={`w-full sm:w-auto transition-opacity duration-1000 ${showNaszaPraca ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                <Button
+                variant="default"
+                size="xl"
+                onClick={(e) => {
+                  const btn = e.currentTarget;
+                  const el = document.getElementById('portfolio');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  window.setTimeout(() => {
+                    btn.blur();
+                  }, 180);
+                }}
+                onMouseUp={(e) => e.currentTarget.blur()}
+                onTouchEnd={(e) => {
+                  window.setTimeout(() => {
+                    e.currentTarget.blur();
+                  }, 180);
+                }}
+                className="bg-gradient-to-r from-gray-400 via-gray-200 to-gray-400 text-black hover:brightness-110 font-bold px-6 sm:px-10 py-4 text-base sm:text-lg w-full sm:w-auto break-words"
+              >
+                Nasza praca
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-text-secondary">
+          <div className={`mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-text-secondary transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <div className="flex items-center space-x-2">
               <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-              <span className="text-sm font-medium font-sans">Ponad 500 zadowolonych klientów</span>
+              <span className="text-xs sm:text-sm font-medium font-sans">Ponad 500 zadowolonych klientów</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-              <span className="text-sm font-medium font-sans">Gwarancja jakości</span>
+              <span className="text-xs sm:text-sm font-medium font-sans">Gwarancja jakości</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-              <span className="text-sm font-medium font-sans">Certyfikowane produkty</span>
+              <span className="text-xs sm:text-sm font-medium font-sans">Certyfikowane produkty</span>
             </div>
           </div>
         </div>
