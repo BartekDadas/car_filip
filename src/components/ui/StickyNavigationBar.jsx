@@ -66,7 +66,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
       <div className="relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center justify-between h-64">
+        <div className="hidden lg:flex items-center justify-between h-[241px]">
           {/* Left Links */}
           <div className="flex items-center space-x-4 flex-1">
             {sections.slice(0, 2).map((section) => (
@@ -83,7 +83,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
             ))}
 
             {/* Social Icons Desktop */}
-            <div className="hidden xl:flex items-center space-x-2 ml-2 pl-4 border-l border-border/50">
+            <div className="flex items-center space-x-2 ml-2 pl-4 border-l border-border/50">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary smooth-transition p-2 hover:bg-white/5 rounded-full" aria-label="Facebook">
                 <Icon name="Facebook" size={18} />
               </a>
@@ -131,7 +131,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex items-center justify-between h-24 lg:hidden">
+        <div className="flex items-center justify-between h-[91px] lg:hidden">
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -140,7 +140,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
             <img
               src="/assets/logo.png"
               alt="Velor Auto Spa"
-              className="h-24 w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
+              className="h-[91px] w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
             />
           </button>
 

@@ -36,7 +36,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
       el.scrollIntoView({ behavior: 'smooth' });
       setTimeout(() => {
         window.dispatchEvent(new Event('openContactModal'));
-      }, 800);
+      }, 1200);
     }
   };
 
@@ -112,7 +112,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
           {/* CTA */}
           <div className="flex flex-col items-center justify-center gap-4 px-3 sm:px-0 w-full max-w-sm sm:max-w-none mx-auto">
             {!isNewUser && (
-              <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 w-full transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+              <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 <Button
                   variant="default"
                   size="xl"
@@ -130,8 +130,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
                     }, 180);
                   }}
                   iconName="ArrowRight"
-                  iconPosition="right"
-                  className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-6 sm:px-10 py-4 text-base sm:text-lg w-full sm:w-auto break-words"
+                  className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-10 w-full sm:w-auto break-words"
                 >
                   Napisz o darmową wycenę
                 </Button>
@@ -183,8 +182,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
                     focus-visible:!text-foreground
                     hover:!text-foreground
 
-                    px-6 sm:px-10 py-4
-                    text-base sm:text-lg
+                    px-10
                     w-full sm:w-auto
                     break-words
 
@@ -196,27 +194,63 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
               </div>
             )}
             {isNewUser && (
-              <div className={`w-full sm:w-auto transition-opacity duration-1000 ${showNaszaPraca ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+              <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full transition-opacity duration-1000 ${showNaszaPraca ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 <Button
-                variant="default"
-                size="xl"
-                onClick={(e) => {
-                  const btn = e.currentTarget;
-                  const el = document.getElementById('portfolio');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  window.setTimeout(() => {
-                    btn.blur();
-                  }, 180);
-                }}
-                onMouseUp={(e) => e.currentTarget.blur()}
-                onTouchEnd={(e) => {
-                  window.setTimeout(() => {
-                    e.currentTarget.blur();
-                  }, 180);
-                }}
-                className="bg-gradient-to-r from-gray-400 via-gray-200 to-gray-400 text-black hover:brightness-110 font-bold px-6 sm:px-10 py-4 text-base sm:text-lg w-full sm:w-auto break-words"
-              >
-                Nasza praca
+                  variant="default"
+                  size="xl"
+                  onClick={(e) => {
+                    const btn = e.currentTarget;
+                    const el = document.getElementById('portfolio');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    window.setTimeout(() => {
+                      btn.blur();
+                    }, 180);
+                  }}
+                  onMouseUp={(e) => e.currentTarget.blur()}
+                  onTouchEnd={(e) => {
+                    window.setTimeout(() => {
+                      e.currentTarget.blur();
+                    }, 180);
+                  }}
+                  className="bg-gradient-to-r from-gray-400 via-gray-200 to-gray-400 text-black hover:brightness-110 font-bold px-10 w-full sm:w-auto break-words"
+                >
+                  Nasza praca
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="xl"
+                  onClick={(e) => {
+                    const btn = e.currentTarget;
+                    const el = document.getElementById('kontakt');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    window.setTimeout(() => {
+                      btn.blur();
+                    }, 180);
+                  }}
+                  onMouseUp={(e) => e.currentTarget.blur()}
+                  onTouchEnd={(e) => {
+                    window.setTimeout(() => {
+                      e.currentTarget.blur();
+                    }, 180);
+                  }}
+                  className={`
+                    border-primary/40
+                    hover:bg-primary/10
+                    hover:border-primary
+
+                    focus:!text-foreground
+                    focus-visible:!text-foreground
+                    hover:!text-foreground
+
+                    px-10
+                    w-full sm:w-auto
+                    break-words
+
+                    !text-foreground
+                  `}
+                >
+                  Zadzwoń lub napisz
                 </Button>
               </div>
             )}

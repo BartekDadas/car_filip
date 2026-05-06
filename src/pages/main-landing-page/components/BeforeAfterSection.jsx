@@ -73,10 +73,10 @@ const BeforeAfterSection = ({ isNewUser = false }) => {
               <div
                   className={`
                     fixed left-0 right-0 top-0 bottom-0 z-[9999]
-                    flex items-end justify-center
+                    flex items-end md:items-center justify-center
                     bg-black/80 backdrop-blur-sm
-                    transition-opacity duration-[1500ms]
-                    ${isModalVisible ? 'opacity-100' : 'opacity-0'}
+                    transition-opacity duration-[1500ms] md:duration-700
+                    ${isModalVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}
                   `}
                   style={{
                       height: '100dvh',
@@ -84,26 +84,28 @@ const BeforeAfterSection = ({ isNewUser = false }) => {
                       paddingTop: 'env(safe-area-inset-top)',
                   }}
                   onClick={(e) => {
-                      if (e.target === e.currentTarget) setIsModalOpen(false);
+                      if (e.target === e.currentTarget && window.innerWidth < 768) {
+                          setIsModalOpen(false);
+                      }
                   }}
               >
                   <div
                       className={`
-                        relative w-full
-                        h-[calc(100dvh-env(safe-area-inset-top))]
-                        max-h-[calc(100dvh-env(safe-area-inset-top))]
+                        relative w-full md:w-[500px] md:max-w-[90vw]
+                        h-[calc(100dvh-env(safe-area-inset-top))] md:h-auto
+                        max-h-[calc(100dvh-env(safe-area-inset-top))] md:max-h-[90vh]
                         overflow-y-auto overscroll-contain
                         bg-card border border-border luxury-shadow
-                        rounded-t-2xl
-                        px-6 pt-6 pb-[calc(env(safe-area-inset-bottom)+32px)]
-                        transition-transform duration-[1500ms]
-                        ease-[cubic-bezier(0.22,1,0.36,1)]
+                        rounded-t-2xl md:rounded-2xl
+                        px-6 pt-6 pb-[calc(env(safe-area-inset-bottom)+32px)] md:pb-8
+                        transition-all duration-[1500ms] md:duration-700
+                        ease-[cubic-bezier(0.22,1,0.36,1)] md:ease-out
                         will-change-transform
-                        ${isModalVisible ? 'translate-y-0' : 'translate-y-full'}
+                        ${isModalVisible ? 'translate-y-0 md:opacity-100 md:scale-100' : 'translate-y-full md:translate-y-8 md:opacity-0 md:scale-95'}
                       `}
                       onClick={(e) => e.stopPropagation()}
                   >
-                      <div className="sm:hidden flex justify-center mb-4">
+                      <div className="md:hidden flex justify-center mb-4">
                           <div className="w-10 h-1 bg-border rounded-full"></div>
                       </div>
 
