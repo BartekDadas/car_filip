@@ -10,7 +10,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
   const sections = [
     { id: 'oferta', label: 'Oferta' },
     { id: 'proces', label: 'Proces' },
-    { id: 'cennik', label: 'Cennik' },
+
     { id: 'kontakt', label: 'Kontakt' },
   ];
 

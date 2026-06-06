@@ -73,43 +73,25 @@ const KontaktSection = () => {
 
                 {/* Trust cue + CTA */}
                 <div className="text-center">
-                    <div className="bg-card rounded-2xl p-8 luxury-gradient-border mb-8">
-                        <div className="flex items-center justify-center space-x-4 mb-4">
-                            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <button
+                        type="button"
+                        onClick={() => window.dispatchEvent(new Event('openContactModal'))}
+                        className="w-full bg-card rounded-2xl p-8 luxury-gradient-border mb-8 hover:border-primary/60 smooth-transition group text-left"
+                    >
+                        <div className="flex items-center justify-center space-x-4">
+                            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 smooth-transition">
                                 <Icon name="ShieldCheck" size={20} className="text-primary" />
                             </div>
                             <div className="text-left">
-                                <h4 className="text-foreground font-semibold font-sans">Bezpłatna wycena</h4>
+                                <h4 className="text-foreground font-semibold font-sans group-hover:text-primary smooth-transition">Bezpłatna wycena →</h4>
                                 <p className="text-text-secondary text-sm font-sans">
                                     Odpowiadamy w ciągu 24h. Bez presji, bez ukrytych kosztów.
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </button>
 
-                    {/* Direct CTA buttons */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button
-                            variant="default"
-                            size="xl"
-                            onClick={() => window.open('tel:+48123456789')}
-                            iconName="Phone"
-                            iconPosition="left"
-                            className="bg-primary hover:bg-secondary text-primary-foreground font-semibold px-10"
-                        >
-                            Zadzwoń teraz
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="xl"
-                            onClick={() => window.open('mailto:kontakt@velorautospa.pl')}
-                            iconName="Mail"
-                            iconPosition="left"
-                            className="border-primary/40 text-foreground hover:bg-primary/10 hover:border-primary px-10"
-                        >
-                            Napisz e-mail
-                        </Button>
-                    </div>
+
 
                     {/* Social links */}
                     <div className="mt-10">

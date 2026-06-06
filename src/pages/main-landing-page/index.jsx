@@ -3,8 +3,9 @@ import StickyNavigationBar from '../../components/ui/StickyNavigationBar';
 import HeroSection from './components/HeroSection';
 import OfertaSection from './components/OfertaSection';
 import ProcessSection from './components/ProcessSection';
-import CennikSection from './components/CennikSection';
+
 import BeforeAfterSection from './components/BeforeAfterSection';
+import NaszZespolSection from './components/NaszZespolSection';
 import KontaktSection from './components/KontaktSection';
 import Footer from './components/Footer';
 
@@ -61,8 +62,9 @@ const MainLandingPage = () => {
       <HeroSection showUI={showUI} showNaszaPraca={showNaszaPraca} isNewUser={isNewUser} />
       <OfertaSection />
       <ProcessSection />
-      <CennikSection />
+
       <BeforeAfterSection isNewUser={isNewUser} />
+      <NaszZespolSection />
       <KontaktSection />
       <Footer />
     </div>

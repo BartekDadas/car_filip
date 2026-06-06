@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="py-6">
           <div className="flex justify-center items-center">
             <div className="text-text-secondary text-xs font-sans">
-              © {currentYear} Velor Auto Spa. Wszelkie prawa zastrzeżone.
+              © {currentYear} Velor Detailing & Protection. Wszelkie prawa zastrzeżone.
             </div>
           </div>
         </div>
