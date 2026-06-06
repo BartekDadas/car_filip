@@ -5,38 +5,28 @@ const OfertaSection = () => {
     const services = [
         {
             icon: 'Sparkles',
-            title: 'Wieloetapowa Korekta Lakieru',
-            description: 'Przywróć zmatowiałej karoserii głęboki, salonowy blask, pozbywając się nieestetycznych zarysowań i hologramów. Profesjonalne polerowanie, od delikatnego "One-Step" po pełną korektę, idealnie przygotowuje auto pod aplikację powłok ochronnych lub wosków.',
-        },
-        {
-            icon: 'Shield',
-            title: 'Aplikacja Powłoki Grafenowej lub Ceramicznej',
-            description: 'Zabezpiecz lakier przed drobnymi mikrozarysowaniami, szkodliwymi promieniami UV oraz blaknięciem koloru. Wyjątkowy efekt hydrofobowy sprawia, że brud i woda spływają same, co znacząco ułatwia utrzymanie samochodu w czystości przez lata.',
-        },
-        {
-            icon: 'Layers',
-            title: 'Oklejanie Folią Ochronną PPF',
-            description: 'Zapewnij swojemu autu fizyczną tarczę przed uszkodzeniami mechanicznymi i odpryskami, wykorzystując zaawansowane folie samoregenerujące. To niezawodne rozwiązanie, które nie tylko fizycznie chroni lakier, ale również sprawia, że codzienne mycie staje się czystą przyjemnością.',
-        },
-        {
-            icon: 'Droplets',
-            title: 'Kompleksowy Detailing i Pranie Wnętrza',
-            description: 'Odzyskaj pierwotną świeżość i nieskazitelną czystość środka, nawet jeśli tapicerka znajduje się w bardzo zaniedbanym stanie. Usługa obejmuje precyzyjne pranie ekstrakcyjne tapicerki materiałowej, czyszczenie detali oraz profesjonalną regenerację elementów skórzanych.',
+            title: 'Detailing Zewnętrzny',
+            description: 'Skupiamy się na przywróceniu blasku i zabezpieczeniu karoserii Twojego samochodu podczas jednego, rozbudowanego procesu. Usługa obejmuje dokładne mycie dekontaminacyjne, glinkowanie lakieru oraz ręczną aplikację wysokiej klasy wosku hydrofobowego. To idealny wybór, aby szybko odświeżyć wygląd auta i zabezpieczyć lakier przed szkodliwym działaniem warunków atmosferycznych.',
         },
         {
             icon: 'Car',
-            title: 'Pakiet Ochronny "Nowe Auto"',
-            description: 'Zabezpiecz swój nowy pojazd prosto z salonu, usuwając najpierw fabryczne mikrozarysowania za pomocą delikatnej korekty. Auto od pierwszego kilometra zyskuje szklistość i bezkompromisową ochronę, zanim zdąży złapać uszkodzenia na drodze.',
+            title: 'Detailing Całościowy',
+            description: 'Kompleksowa opieka nad Twoim pojazdem, łącząca zaawansowaną kosmetykę wnętrza z pełną odnową zewnętrzną. W środku przeprowadzamy gruntowne pranie tapicerki i pędzelkowanie detali, natomiast na zewnątrz wykonujemy pełną dekontaminację lakieru zwieńczoną woskowaniem. To idealny pakiet dla osób, które chcą ponownie poczuć się w swoim aucie jak w dniu jego wyjazdu z salonu.',
         },
         {
-            icon: 'Wand2',
-            title: 'Bezpieczne Mycie Detailingowe z Dekontaminacją',
-            description: 'Oczyść karoserię z trudnych osadów drogowych za pomocą piany aktywnej i technik, które gwarantują brak nowych mikrorys na lakierze. Profesjonalne usunięcie zanieczyszczeń zapobiega niszczeniu powłoki i przygotowuje auto do kolejnych sezonów.',
+            icon: 'Droplets',
+            title: 'DIP Shine',
+            description: 'Pakiet DIP Shine to szybki zastrzyk niesamowitego blasku i podstawowa ochrona dedykowana dla zapracowanych kierowców. Obejmuje on staranne mycie detailingowe nadwozia, odświeżenie plastików wnętrza oraz aplikację zaawansowanego sealantu polimerowego na lakier. Twój samochód zyska wyjątkową szklistość oraz barierę odpychającą wodę i brud w zaledwie kilka godzin.',
         },
         {
-            icon: 'Wrench',
-            title: 'Serwis i Odświeżenie Powłok Ochronnych',
-            description: 'Przywróć swojej powłoce ceramicznej lub grafenowej początkową hydrofobowość, poślizg i blask po dłuższym czasie użytkowania. Fachowy serwis obejmuje dogłębne usunięcie osadów z lakieru i regenerację nałożonego wcześniej zabezpieczenia, co wydłuża jego żywotność.',
+            icon: 'Shield',
+            title: 'DIP Ceramic',
+            description: 'Zestaw DIP Ceramic to trwała tarcza ochronna oparta na najnowszych technologiach kwarcowych, stworzona z myślą o wymagających klientach. Po pełnym przygotowaniu i jednoetapowej korekcie lakieru, aplikujemy certyfikowaną powłokę ceramiczną o trwałości do 3 lat. Zapewnia ona bezkompromisową ochronę przed mikrozarysowaniami, agresywną chemią drogową oraz blaknięciem od słońca.',
+        },
+        {
+            icon: 'Crown',
+            title: 'DIP Ultimate',
+            description: 'Nasz flagowy zestaw DIP Ultimate to absolutne maksimum luksusu, odnowy i długoterminowego zabezpieczenia każdej, nawet najmniejszej powierzchni Twojego auta. W ramach tego pakietu wykonujemy wieloetapową korektę lakieru, aplikujemy powłoki grafenowe na karoserię, szyby oraz felgi, a całe wnętrze zabezpieczamy dedykowanymi impregnatami. To prestiżowa inwestycja, która gwarantuje spektakularny wygląd i najdłuższą możliwą żywotność wszystkich elementów pojazdu.',
         },
     ];
 

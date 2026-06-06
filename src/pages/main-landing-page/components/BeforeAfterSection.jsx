@@ -3,39 +3,39 @@ import { createPortal } from 'react-dom';
 import Button from '../../../components/ui/Button';
 import Icon from '../../../components/AppIcon';
 
-/* ── Mock video data ─────────────────────────────────────────────────── */
+/* ── YouTube Shorts data ──────────────────────────────────────────────── */
 const videos = [
     {
         id: 1,
-        src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+        ytId: 'vwg0JEOLB_k',
         title: 'Korekta Lakieru',
         caption: 'Usunięcie rys i hologramów — blask jak z salonu',
         tag: 'Korekta',
     },
     {
         id: 2,
-        src: 'https://www.w3schools.com/html/movie.mp4',
+        ytId: 'cth1BI_HYeE',
         title: 'Detailing Wnętrza',
         caption: 'Kompleksowe czyszczenie skóry, plastików i tkanin',
         tag: 'Wnętrze',
     },
     {
         id: 3,
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        ytId: 'yKJhrj1xwwU',
         title: 'Powłoka Ceramiczna',
         caption: 'Wieloletnia ochrona lakieru i efekt hydrofobowy',
         tag: 'Ceramika',
     },
     {
         id: 4,
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        ytId: '8B5cu5L0ZbY',
         title: 'Oklejanie PPF',
         caption: 'Fizyczna tarcza przed odpryskami i zarysowaniami',
         tag: 'PPF',
     },
     {
         id: 5,
-        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+        ytId: '85-Q6WOQqWI',
         title: 'Mycie Detailingowe',
         caption: 'Bezpieczne mycie bez mikrorys, z dekontaminacją',
         tag: 'Mycie',
@@ -45,94 +45,49 @@ const videos = [
 const CARD_W = 280; // px — active card width
 const GAP    = 20;  // px — gap between cards
 
-/* ── Individual Video Card ───────────────────────────────────────────── */
-const VideoCard = ({ video, isActive, isMuted, onMuteToggle }) => {
-    const videoRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [progress, setProgress]   = useState(0);
-
-    useEffect(() => {
-        const el = videoRef.current;
-        if (!el) return;
-        if (isActive) {
-            el.currentTime = 0;
-            el.play().catch(() => {});
-            setIsPlaying(true);
-        } else {
-            el.pause();
-            el.currentTime = 0;
-            setIsPlaying(false);
-            setProgress(0);
-        }
-    }, [isActive]);
-
-    useEffect(() => {
-        if (videoRef.current) videoRef.current.muted = isMuted;
-    }, [isMuted]);
-
-    const handleTimeUpdate = () => {
-        const el = videoRef.current;
-        if (!el || !el.duration) return;
-        setProgress((el.currentTime / el.duration) * 100);
-    };
-
-    const handleClick = () => {
-        const el = videoRef.current;
-        if (!el) return;
-        if (el.paused) { el.play(); setIsPlaying(true); }
-        else           { el.pause(); setIsPlaying(false); }
-    };
+/* ── Individual Video Card (YouTube Shorts embed) ────────────────────── */
+const VideoCard = ({ video, isActive }) => {
+    // Build embed URL: autoplay when active, loop, muted, minimal controls
+    const embedUrl = isActive
+        ? `https://www.youtube.com/embed/${video.ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${video.ytId}&playsinline=1&rel=0&modestbranding=1`
+        : null;
 
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-zinc-900 luxury-gradient-border">
-            <video
-                ref={videoRef}
-                src={video.src}
-                loop
-                muted={isMuted}
-                playsInline
-                onTimeUpdate={handleTimeUpdate}
-                onClick={handleClick}
-                className="w-full h-full object-cover cursor-pointer"
-                draggable={false}
-            />
+            {/* YouTube iframe — only loaded when active to avoid 5 iframes at once */}
+            {isActive ? (
+                <iframe
+                    src={embedUrl}
+                    className="w-full h-full"
+                    allow="autoplay; fullscreen"
+                    frameBorder="0"
+                    title={video.title}
+                    style={{ border: 'none' }}
+                />
+            ) : (
+                /* Thumbnail placeholder for inactive cards */
+                <img
+                    src={`https://img.youtube.com/vi/${video.ytId}/oar2.jpg`}
+                    alt={video.title}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                />
+            )}
 
-            {/* Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20 pointer-events-none" />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none" />
 
-            {/* Tag */}
+            {/* Tag pill */}
             <div className="absolute top-4 left-4 z-10">
                 <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase font-sans bg-primary/90 text-primary-foreground backdrop-blur-sm">
                     {video.tag}
                 </span>
             </div>
 
-            {/* Mute */}
-            <button
-                onClick={(e) => { e.stopPropagation(); onMuteToggle(); }}
-                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 smooth-transition"
-            >
-                <Icon name={isMuted ? 'VolumeX' : 'Volume2'} size={16} />
-            </button>
-
-            {/* Play indicator */}
-            {!isPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                        <Icon name="Play" size={28} className="text-white ml-1" />
-                    </div>
-                </div>
-            )}
-
             {/* Caption */}
-            <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+            <div className="absolute bottom-0 left-0 right-0 p-5 z-10 pointer-events-none">
                 <h3 className="text-white text-lg font-bold font-serif mb-1">{video.title}</h3>
                 <p className="text-white/70 text-sm font-sans leading-snug">{video.caption}</p>
-            </div>
-
-            {/* Progress bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20 z-20">
-                <div className="h-full bg-primary smooth-transition" style={{ width: `${progress}%` }} />
             </div>
         </div>
     );
@@ -142,7 +97,6 @@ const VideoCard = ({ video, isActive, isMuted, onMuteToggle }) => {
 const BeforeAfterSection = ({ isNewUser = false }) => {
     const INITIAL = Math.floor(videos.length / 2); // start at middle item
     const [current, setCurrent] = useState(INITIAL);
-    const [isMuted, setIsMuted] = useState(true);
     const [isModalOpen, setIsModalOpen]       = useState(false);
     const [shouldRenderModal, setShouldRenderModal] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -315,10 +269,7 @@ const BeforeAfterSection = ({ isNewUser = false }) => {
 
                 <div className="flex flex-col items-center gap-6">
 
-                    {/* Counter */}
-                    <p className="text-text-secondary text-sm font-sans tracking-widest uppercase">
-                        {String(current + 1).padStart(2, '0')} / {String(videos.length).padStart(2, '0')}
-                    </p>
+                    {/* Counter removed */}
 
                     {/* ─────────────────────────────────────────────────
                         Scroll-snap track
@@ -365,8 +316,6 @@ const BeforeAfterSection = ({ isNewUser = false }) => {
                                         <VideoCard
                                             video={video}
                                             isActive={isAct}
-                                            isMuted={isMuted}
-                                            onMuteToggle={() => setIsMuted((m) => !m)}
                                         />
                                     </div>
                                 );

@@ -100,19 +100,19 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-24 sm:py-32">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-[92px] pb-20 sm:py-24 lg:pt-[140px] lg:pb-[40px]">
         <div className="max-w-4xl mx-auto">
           <div className={`transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             {/* Silver decorative line */}
-            <div className="lux-divider mb-8"></div>
+            <div className="lux-divider mb-4"></div>
 
             {/* Overline */}
-            <p className="text-primary text-xs sm:text-base font-medium tracking-[0.2em] uppercase mb-4 sm:mb-6 font-sans">
+            <p className="text-primary text-xs sm:text-sm font-medium tracking-[0.2em] uppercase mb-2 sm:mb-3 font-sans">
               Detailing & Protection
             </p>
 
             {/* Main Headline */}
-            <h1 className="text-2xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-4 sm:mb-6 leading-[1.1] tracking-tight uppercase px-2">
+            <h1 className="text-2xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-2 sm:mb-3 leading-[1.1] tracking-tight uppercase px-2">
               Twoje{' '}
               <span className="text-transparent bg-gradient-to-r from-primary via-white to-secondary bg-clip-text">
                 auto czystsze
@@ -125,7 +125,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
           </div>
 
           {/* CTA */}
-          <div className="flex flex-col items-center justify-center gap-4 px-3 sm:px-0 w-full max-w-sm sm:max-w-none mx-auto mt-[30px]">
+          <div className="flex flex-col items-center justify-center gap-4 px-3 sm:px-0 w-full max-w-sm sm:max-w-none mx-auto mt-[30px] lg:mt-[50px]">
             {!isNewUser && (
               <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 <Button

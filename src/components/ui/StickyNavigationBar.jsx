@@ -64,94 +64,97 @@ const StickyNavigationBar = ({ showUI = true }) => {
       {/* Scrolled background - separate layer to avoid blur issues */}
       <div className={`absolute inset-0 transition-all duration-300 ${isScrolled ? 'bg-background/95 shadow-lg shadow-black/20' : 'bg-transparent'}`} style={{ backdropFilter: isScrolled ? 'blur(20px)' : 'none', WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none' }}></div>
       <div className="relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center justify-between h-[241px]">
-          {/* Left Links */}
-          <div className="flex items-center space-x-4 flex-1">
-            {sections.slice(0, 2).map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
-                  ? 'text-primary bg-primary/10'
-                  : 'text-text-secondary hover:text-foreground hover:bg-white/5'
-                  }`}
-              >
-                {section.label}
-              </button>
-            ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center justify-between h-[180px]">
+            {/* Left Links */}
+            <div className="flex items-center space-x-4 flex-1">
+              {sections.slice(0, 2).map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
+                    ? 'text-primary bg-primary/10'
+                    : 'text-text-secondary hover:text-foreground hover:bg-white/5'
+                    }`}
+                >
+                  {section.label}
+                </button>
+              ))}
 
-            {/* Social Icons Desktop */}
-            <div className="flex items-center space-x-2 ml-2 pl-4 border-l border-border/50">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary smooth-transition p-2 hover:bg-white/5 rounded-full" aria-label="Facebook">
-                <Icon name="Facebook" size={18} />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary smooth-transition p-2 hover:bg-white/5 rounded-full" aria-label="Instagram">
-                <Icon name="Instagram" size={18} />
+              {/* Social Icons Desktop */}
+              <div className="flex items-center space-x-2 ml-2 pl-4 border-l border-border/50">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary smooth-transition p-2 hover:bg-white/5 rounded-full" aria-label="Facebook">
+                  <Icon name="Facebook" size={18} />
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary smooth-transition p-2 hover:bg-white/5 rounded-full" aria-label="Instagram">
+                  <Icon name="Instagram" size={18} />
+                </a>
+              </div>
+            </div>
+
+            {/* Center Logo */}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex items-center hover-scale mx-8"
+            >
+              <img
+                src="/assets/logo.png"
+                alt="Velor Auto Spa"
+                className="h-[130px] w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
+              />
+            </button>
+
+            {/* Right Links + Phone */}
+            <div className="flex items-center justify-end space-x-4 flex-1">
+              {sections.slice(2).map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
+                    ? 'text-primary bg-primary/10'
+                    : 'text-text-secondary hover:text-foreground hover:bg-white/5'
+                    }`}
+                >
+                  {section.label}
+                </button>
+              ))}
+              <div className="h-4 w-[1px] bg-border mx-2"></div>
+              <a
+                href="tel:+48123456789"
+                className="flex items-center space-x-2 text-text-secondary hover:text-primary smooth-transition"
+              >
+                <Icon name="Phone" size={16} />
+                <span className="text-sm font-medium whitespace-nowrap">+48 123 456 789</span>
               </a>
             </div>
           </div>
 
-          {/* Center Logo */}
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center hover-scale mx-8"
-          >
-            <img
-              src="/assets/logo.png"
-              alt="Velor Auto Spa"
-              className="h-56 w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
-            />
-          </button>
-
-          {/* Right Links + Phone */}
-          <div className="flex items-center justify-end space-x-4 flex-1">
-            {sections.slice(2).map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
-                  ? 'text-primary bg-primary/10'
-                  : 'text-text-secondary hover:text-foreground hover:bg-white/5'
-                  }`}
-              >
-                {section.label}
-              </button>
-            ))}
-            <div className="h-4 w-[1px] bg-border mx-2"></div>
-            <a
-              href="tel:+48123456789"
-              className="flex items-center space-x-2 text-text-secondary hover:text-primary smooth-transition"
-            >
-              <Icon name="Phone" size={16} />
-              <span className="text-sm font-medium whitespace-nowrap">+48 123 456 789</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="flex items-center justify-between h-[91px] lg:hidden">
-          {/* Logo */}
+          {/* Mobile Navigation */}
+          <div className="flex items-center justify-between h-[91px] lg:hidden">
+            {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex items-center hover-scale"
           >
-            <img
-              src="/assets/logo.png"
-              alt="Velor Auto Spa"
-              className="h-[91px] w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
-            />
+            <div className="relative flex items-center justify-center px-1">
+              <div className="absolute inset-y-4 inset-x-0 bg-[#E2E8F0] rounded-lg"></div>
+              <img
+                src="/assets/logo.png"
+                alt="Velor Auto Spa"
+                className="relative h-[91px] w-auto"
+              />
+            </div>
           </button>
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-lg text-text-secondary hover:text-primary smooth-transition"
-          >
-            <Icon name={isMenuOpen ? "X" : "Menu"} size={24} />
-          </button>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg text-text-secondary hover:text-primary smooth-transition"
+            >
+              <Icon name={isMenuOpen ? "X" : "Menu"} size={24} />
+            </button>
+          </div>
         </div>
-      </div>
       </div>
 
       {/* Mobile Menu */}
@@ -180,11 +183,14 @@ const StickyNavigationBar = ({ showUI = true }) => {
               }}
               className="flex items-center hover-scale"
             >
-              <img
-                src="/assets/logo.png"
-                alt="Velor Auto Spa"
-                className="h-28 w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
-              />
+              <div className="relative flex items-center justify-center px-1">
+                <div className="absolute inset-y-5 inset-x-0 bg-[#E2E8F0] rounded-lg"></div>
+                <img
+                  src="/assets/logo.png"
+                  alt="Velor Auto Spa"
+                  className="relative h-28 w-auto"
+                />
+              </div>
             </button>
 
             <button
@@ -200,11 +206,10 @@ const StickyNavigationBar = ({ showUI = true }) => {
               <button
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
-                className={`w-full text-left px-4 py-4 smooth-transition text-lg font-medium ${
-                  activeSection === section.id
-                    ? 'text-primary border-l-2 border-primary pl-6'
-                    : 'text-text-secondary hover:text-foreground hover:pl-6'
-                }`}
+                className={`w-full text-left px-4 py-4 smooth-transition text-lg font-medium ${activeSection === section.id
+                  ? 'text-primary border-l-2 border-primary pl-6'
+                  : 'text-text-secondary hover:text-foreground hover:pl-6'
+                  }`}
               >
                 {section.label}
               </button>
