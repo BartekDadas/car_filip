@@ -4,14 +4,14 @@ const teamMembers = [
   {
     id: 1,
     name: 'Filip Dadas',
-    role: 'Właściciel & Mistrz Polerki',
+    role: 'Właściciel',
     img: '/team-person-1.jpeg',
-    bio: 'Dbający o szczegóły i jakość wykonanej pracy, zawsze ma na uwadze zadowolenie klienta. Auto nie jest dobrze wyczyszczone dopóki sam się nie zadowoli efektem.',
+    bio: 'Dbający o każdy detal i jakość wykonanej pracy, zawsze ma na uwadze zadowolenie klienta. Auto nie jest dobrze wyczyszczone dopóki sam się nie zadowoli efektem.',
   },
   {
     id: 2,
     name: 'Jakub Safian',
-    role: 'Współzałożyciel & Magik od Wnętrz',
+    role: 'Właściciel',
     img: '/team-person-2.jpeg',
     bio: 'Ekspert w dziedzinie detailingu wnętrz, dbający o najmniejszy szczegół, nie znosi brudnych dywanów i foteli więc to jego priorytet.',
   },
@@ -46,7 +46,7 @@ const NaszZespolSection = () => {
               style={{ background: 'linear-gradient(to bottom, transparent, #c0c0c0, transparent)' }}
             />
             <p
-              className="text-sm leading-relaxed font-sans italic"
+              className="hidden lg:block text-sm leading-relaxed font-sans italic"
               style={{ color: '#a0a0a0' }}
             >
               „Każde auto traktujemy jak własne. Precyzja, pasja i dbałość o szczegóły — to nasza

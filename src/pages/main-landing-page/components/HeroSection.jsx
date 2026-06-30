@@ -7,7 +7,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
   const videoRef = useRef(null);
   const playCount = useRef(0);
   const [showVideo, setShowVideo] = useState(true);
-  const [offerPressed, setOfferPressed] = useState(false);
+  const [procesPressed, setProcesPressed] = useState(false);
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)').matches : false
   );
@@ -67,36 +67,47 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-x-hidden">
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      <div 
+        className="absolute inset-0 z-0 flex items-center justify-center bg-background overflow-hidden"
+        style={{
+          backgroundImage: !isMobile ? 'url(/bg.png)' : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         {showVideo ? (
           <video
             ref={videoRef}
             key={videoSrc}
-            className="w-full h-full object-cover"
+            className="hero-video"
+            style={!isMobile ? { maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)' } : {}}
             autoPlay
             muted
             playsInline
             preload="metadata"
-            poster={isMobile ? '/gemini-frame.png' : '/last-frame.png'}
+            poster={isMobile ? '/gemini-frame.png' : '/last_frame.png'}
             aria-hidden="true"
             onError={handleVideoError}
             onEnded={handleVideoEnded}
           >
+            {!isMobile && <source src="/long.webm" type="video/webm" />}
             <source src={videoSrc} type="video/mp4" />
           </video>
         ) : (
           <img
-            src={isMobile ? '/gemini-frame.png' : '/last-frame.png'}
+            src={isMobile ? '/gemini-frame.png' : '/last_frame.png'}
             alt="Background"
-            className="w-full h-full object-cover"
+            className="hero-video"
+            style={!isMobile ? { maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)' } : {}}
             aria-hidden="true"
           />
         )}
         {/* Multi-layer overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/20 to-background/40"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30"></div>
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-b from-background/30 via-background/20 to-background/40"></div>
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-background/30 via-transparent to-background/30"></div>
         {/* Subtle silver accent glow */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[120px] opacity-50"></div>
+        <div className="hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[120px] opacity-50"></div>
       </div>
 
       {/* Content */}
@@ -156,13 +167,13 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
                   onClick={(e) => {
                     const btn = e.currentTarget;
 
-                    setOfferPressed(true);
+                    setProcesPressed(true);
 
-                    const el = document.getElementById('oferta');
+                    const el = document.getElementById('proces');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
 
                     window.setTimeout(() => {
-                      setOfferPressed(false);
+                      setProcesPressed(false);
 
                       btn.blur();
 
@@ -178,7 +189,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
                     const btn = e.currentTarget;
 
                     window.setTimeout(() => {
-                      setOfferPressed(false);
+                      setProcesPressed(false);
                       btn.blur();
 
                       if (document.activeElement instanceof HTMLElement) {
@@ -199,10 +210,10 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
 
                     w-full sm:w-[320px] px-2 sm:px-4 py-4 uppercase tracking-widest text-xs sm:text-sm
 
-                    ${offerPressed ? '!text-black' : '!text-foreground'}
+                    ${procesPressed ? '!text-black' : '!text-foreground'}
                   `}
                 >
-                  Zobacz ofertę
+                  Jak pracujemy
                 </Button>
               </div>
             )}
@@ -227,7 +238,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
                   }}
                   className="bg-gradient-to-r from-gray-400 via-gray-200 to-gray-400 text-black hover:brightness-110 font-bold w-full sm:w-[320px] px-2 sm:px-4 py-4 uppercase tracking-widest text-xs sm:text-sm"
                 >
-                  Nasza praca
+                  Bezpłatna wycena
                 </Button>
 
                 <Button
