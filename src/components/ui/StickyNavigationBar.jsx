@@ -23,7 +23,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
     { id: 'proces', label: 'Proces' },
     { id: 'portfolio', label: 'Realizacje' },
     { id: 'nasz-zespol', label: 'Zespół' },
-    { id: 'cennik', label: 'Cennik' },
+    { id: 'oferta', label: 'Oferta' },
     { id: 'kontakt', label: 'Kontakt' },
   ];
 
@@ -116,7 +116,7 @@ const StickyNavigationBar = ({ showUI = true }) => {
               className="flex items-center hover-scale mx-8"
             >
               <img
-                src="/assets/logo_b.png"
+                src="/assets/logo.png"
                 alt="Velor Auto Spa"
                 className="h-[110px] w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
               />

@@ -67,7 +67,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-x-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0 flex items-center justify-center bg-background overflow-hidden"
         style={{
           backgroundImage: !isMobile ? 'url(/bg.png)' : 'none',
@@ -118,9 +118,7 @@ const HeroSection = ({ showUI = true, showNaszaPraca = true, isNewUser = false }
             <div className="lux-divider mb-4"></div>
 
             {/* Overline */}
-            <p className="text-primary text-xs sm:text-sm font-medium tracking-[0.2em] uppercase mb-2 sm:mb-3 font-sans">
-              Detailing & Protection
-            </p>
+
 
             {/* Main Headline */}
             <h1 className="text-2xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-2 sm:mb-3 leading-[1.1] tracking-tight uppercase px-2">

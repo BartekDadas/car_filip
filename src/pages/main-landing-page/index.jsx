@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import StickyNavigationBar from '../../components/ui/StickyNavigationBar';
 import HeroSection from './components/HeroSection';
 import ProcessSection from './components/ProcessSection';
+import ServicesGrid from './components/ServicesGrid';
 
 import BeforeAfterSection from './components/BeforeAfterSection';
 import NaszZespolSection from './components/NaszZespolSection';
-import CennikSection from './components/CennikSection';
 import KontaktSection from './components/KontaktSection';
 import Footer from './components/Footer';
 
@@ -60,11 +60,11 @@ const MainLandingPage = () => {
     <div className="min-h-screen bg-background">
       <StickyNavigationBar showUI={showUI} />
       <HeroSection showUI={showUI} showNaszaPraca={showNaszaPraca} isNewUser={isNewUser} />
+      <ServicesGrid />
       <ProcessSection />
 
       <BeforeAfterSection isNewUser={isNewUser} />
       <NaszZespolSection />
-      <CennikSection />
       <KontaktSection />
       <Footer />
     </div>

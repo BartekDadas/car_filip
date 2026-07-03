@@ -6,14 +6,14 @@ const teamMembers = [
     name: 'Filip Dadas',
     role: 'Właściciel',
     img: '/team-person-1.jpeg',
-    bio: 'Dbający o każdy detal i jakość wykonanej pracy, zawsze ma na uwadze zadowolenie klienta. Auto nie jest dobrze wyczyszczone dopóki sam się nie zadowoli efektem.',
+    bio: 'W detalingu najbardziej cenię precyzję, dlatego w naszym studio odpowiadam za najtrudniejsze, wymagające ogromnej cierpliwości etapy. Moja specjalność to aplikacja powłok ochronnych oraz perfekcyjne docinanie i wykańczanie folii PPF – tak, aby były całkowicie niewidoczne na lakierze. Jaram się motoryzacją od dzieciństwa i tę pasję przekuwam w techniczną doskonałość. Dbam o to, by każde auto opuszczające VELOR było zabezpieczone na najwyższym poziomie.',
   },
   {
     id: 2,
     name: 'Jakub Safian',
     role: 'Właściciel',
     img: '/team-person-2.jpeg',
-    bio: 'Ekspert w dziedzinie detailingu wnętrz, dbający o najmniejszy szczegół, nie znosi brudnych dywanów i foteli więc to jego priorytet.',
+    bio: 'Moja pasja do motoryzacji zaczęła się od marzeń z dzieciństwa, a dziś przekuwam ją w konkretne efekty na lakierze. W VELOR specjalizuję się w zaawansowanych korektach lakieru oraz profesjonalnym montażu folii ochronnych PPF. Moją misją jest wyciągnięcie z każdego nadwozia maksymalnej głębi koloru i salonowego blasku. Jestem absolutnym estetą, dlatego Twoje auto traktuję w studio priorytetowo – bez dróg na skróty i bez kompromisów.',
   },
 ];
 
