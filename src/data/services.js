@@ -20,7 +20,7 @@ export const services = [
       ]
     ],
     "price": "od 250 zł",
-    "image": "/assets/services/5.svg"
+    "images": ["/assets/services/5.svg", "/assets/services/5-2.svg"]
   },
   {
     "id": 1,
@@ -50,7 +50,7 @@ export const services = [
       ]
     ],
     "price": "od 900 zł",
-    "image": "/assets/services/1.svg"
+    "images": ["/assets/services/1.svg", "/assets/services/1-2.svg"]
   },
   {
     "id": 2,
@@ -107,7 +107,7 @@ export const services = [
       ]
     ],
     "price": "od 50 zł / element",
-    "image": "/assets/services/2.svg"
+    "images": ["/assets/services/2.svg", "/assets/services/2-2.svg"]
   },
   {
     "id": 4,
@@ -131,7 +131,7 @@ export const services = [
       ]
     ],
     "price": "Wycena indywidualna",
-    "image": "/assets/services/4.svg"
+    "images": ["/assets/services/4.svg", "/assets/services/4-2.svg"]
   },
   {
     "id": 8,
@@ -147,7 +147,7 @@ export const services = [
       ]
     ],
     "price": "od 250 zł",
-    "image": "/assets/services/8.svg"
+    "images": ["/assets/services/8.svg", "/assets/services/8-2.svg"]
   },
   {
     "id": 3,
@@ -167,7 +167,7 @@ export const services = [
       ]
     ],
     "price": "od 500 zł",
-    "image": "/assets/services/3.svg"
+    "images": ["/assets/services/3.svg", "/assets/services/3-2.svg"]
   },
   {
     "id": 6,
@@ -200,7 +200,7 @@ export const services = [
       ]
     ],
     "price": "od 700 zł",
-    "image": "/assets/services/6.svg"
+    "images": ["/assets/services/6.svg", "/assets/services/6-2.svg"]
   },
   {
     "id": 7,
@@ -217,6 +217,6 @@ export const services = [
       ]
     ],
     "price": "od 200 zł",
-    "image": "/assets/services/7.svg"
+    "images": ["/assets/services/7.svg", "/assets/services/7-2.svg"]
   }
 ];

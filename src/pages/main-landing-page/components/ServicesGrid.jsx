@@ -14,7 +14,11 @@ export default function ServicesGrid() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service) => (
             <article key={service.id} className="min-w-0 bg-card rounded-2xl overflow-hidden border border-primary/20 flex flex-col">
-              <img src={service.image} alt="" loading="lazy" width="640" height="400" className="w-full aspect-[8/5] object-cover" />
+              <div className="grid grid-cols-2 gap-px bg-white/10">
+                {service.images.map((src) => (
+                  <img key={src} src={src} alt="" loading="lazy" width="640" height="400" className="w-full min-w-0 aspect-[8/5] object-cover" />
+                ))}
+              </div>
               <div className="p-6 sm:p-8 flex flex-col flex-1">
                 <h3 className="text-xl font-bold text-foreground mb-3 font-serif">{service.title}</h3>
                 <p className="text-text-secondary leading-relaxed text-sm mb-6 flex-1">{service.summary}</p>
