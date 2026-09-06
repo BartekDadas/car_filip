@@ -1,54 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { services } from '../../../data/services';
 
-const ServicesGrid = () => {
-  // Create an array of 9 items
-  const items = Array.from({ length: 9 }).map((_, index) => ({
-    id: index + 1,
-    title: `Usługa ${index + 1}`,
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-  }));
-
+export default function ServicesGrid() {
   return (
     <section id="oferta" className="py-20 lg:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="lux-divider mb-6"></div>
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="lux-divider mb-6" />
           <h2 className="section-heading">Nasze Usługi</h2>
-          <p className="section-subheading">
-            Odkryj naszą pełną ofertę profesjonalnego detailingu.
-          </p>
+          <p className="section-subheading">Odkryj naszą pełną ofertę profesjonalnego detailingu.</p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="group relative bg-card rounded-2xl p-8 luxury-gradient-border hover-scale smooth-transition flex flex-col"
-            >
-              <h3 className="text-xl font-bold text-foreground mb-3 font-serif">
-                {item.title}
-              </h3>
-              
-              <p className="text-text-secondary leading-relaxed text-sm font-sans mb-6 flex-grow">
-                {item.description}
-              </p>
-
-              <Link
-                to={`/item/${item.id}`}
-                className="inline-flex items-center justify-center px-6 py-3 border border-primary/30 text-primary font-semibold text-sm uppercase tracking-widest hover:bg-primary hover:text-black smooth-transition rounded-lg"
-              >
-                Więcej
-              </Link>
-
-              {/* Hover accent line */}
-              <div className="absolute bottom-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-primary/0 to-transparent group-hover:via-primary/40 smooth-transition rounded-full"></div>
-            </div>
+          {services.map((service) => (
+            <article key={service.id} className="min-w-0 bg-card rounded-2xl overflow-hidden border border-primary/20 flex flex-col">
+              <img src={service.image} alt="" loading="lazy" width="640" height="400" className="w-full aspect-[8/5] object-cover" />
+              <div className="p-6 sm:p-8 flex flex-col flex-1">
+                <h3 className="text-xl font-bold text-foreground mb-3 font-serif">{service.title}</h3>
+                <p className="text-text-secondary leading-relaxed text-sm mb-6 flex-1">{service.summary}</p>
+                <p className="text-primary font-semibold mb-4">{service.price}</p>
+                <Link to={`/item/${service.id}`} aria-label={`Więcej: ${service.title}`} className="inline-flex min-h-[48px] items-center justify-center px-4 py-3 border border-primary/30 text-primary font-semibold text-sm uppercase tracking-widest hover:bg-primary hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-lg smooth-transition">Więcej</Link>
+              </div>
+            </article>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default ServicesGrid;
+}
