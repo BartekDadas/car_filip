@@ -1,3 +1,4 @@
+import ServiceGallery from '../../components/ServiceGallery';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Footer from '../main-landing-page/components/Footer';
@@ -14,11 +15,7 @@ export default function ItemDetails() {
           <a href="/#oferta" className="inline-flex min-h-[48px] items-center text-primary mb-6 underline underline-offset-4">← Wszystkie usługi</a>
           {!service ? <h1 className="text-3xl text-foreground">Nie znaleziono usługi</h1> : (
             <article className="bg-card rounded-2xl overflow-hidden border border-primary/20">
-              <div className="grid grid-cols-2 gap-px bg-white/10">
-                {service.images.map((src) => (
-                  <img key={src} src={src} alt="" loading="lazy" width="640" height="400" className="w-full min-w-0 aspect-[8/5] object-cover" />
-                ))}
-              </div>
+              <ServiceGallery images={service.images} detailed />
               <div className="p-6 sm:p-10 lg:p-12">
                 <p className="text-primary text-xs uppercase tracking-widest mb-4">Szczegóły usługi</p>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-8 break-words">{service.title}</h1>

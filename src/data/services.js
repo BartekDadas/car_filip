@@ -1,4 +1,4 @@
-// Service IDs remain stable independently of display order.
+// Original service IDs determine image assignment, independently of display order.
 export const services = [
   {
     "id": 5,
@@ -20,7 +20,20 @@ export const services = [
       ]
     ],
     "price": "od 250 zł",
-    "images": ["/assets/services/5.svg", "/assets/services/5-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_5/WhatsApp Image 2026-09-04 at 23.48.17 (1).jpeg",
+        "width": 2048,
+        "height": 2048,
+        "alt": "Porównanie wnętrza przed i po detailingu"
+      },
+      {
+        "src": "/assets/services/uslugi_5/WhatsApp Image 2026-09-04 at 23.48.17.jpeg",
+        "width": 2048,
+        "height": 2048,
+        "alt": "Efekty czyszczenia wnętrza samochodu"
+      }
+    ]
   },
   {
     "id": 1,
@@ -50,7 +63,20 @@ export const services = [
       ]
     ],
     "price": "od 900 zł",
-    "images": ["/assets/services/1.svg", "/assets/services/1-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_1/WhatsApp Image 2026-09-04 at 23.52.51.jpeg",
+        "width": 1200,
+        "height": 1600,
+        "alt": "Lakier podczas korekty"
+      },
+      {
+        "src": "/assets/services/uslugi_1/WhatsApp Image 2026-09-04 at 23.52.52.jpeg",
+        "width": 1200,
+        "height": 1600,
+        "alt": "Praca nad lakierem samochodu"
+      }
+    ]
   },
   {
     "id": 2,
@@ -107,7 +133,20 @@ export const services = [
       ]
     ],
     "price": "od 50 zł / element",
-    "images": ["/assets/services/2.svg", "/assets/services/2-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_2/WhatsApp Image 2026-09-04 at 23.53.18 (1).jpeg",
+        "width": 1152,
+        "height": 2048,
+        "alt": "Przygotowanie folii ochronnej PPF"
+      },
+      {
+        "src": "/assets/services/uslugi_2/WhatsApp Image 2026-09-04 at 23.53.18.jpeg",
+        "width": 1152,
+        "height": 2048,
+        "alt": "Aplikacja folii PPF na samochodzie"
+      }
+    ]
   },
   {
     "id": 4,
@@ -131,7 +170,14 @@ export const services = [
       ]
     ],
     "price": "Wycena indywidualna",
-    "images": ["/assets/services/4.svg", "/assets/services/4-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_4.jpeg",
+        "width": 1640,
+        "height": 2048,
+        "alt": "Porównanie wyglądu reflektora przed i po regeneracji"
+      }
+    ]
   },
   {
     "id": 8,
@@ -147,7 +193,20 @@ export const services = [
       ]
     ],
     "price": "od 250 zł",
-    "images": ["/assets/services/8.svg", "/assets/services/8-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_8/WhatsApp Image 2026-09-04 at 23.52.26 (1).jpeg",
+        "width": 1280,
+        "height": 1600,
+        "alt": "Porównanie tapicerki przed i po praniu"
+      },
+      {
+        "src": "/assets/services/uslugi_8/WhatsApp Image 2026-09-04 at 23.52.26.jpeg",
+        "width": 1920,
+        "height": 1920,
+        "alt": "Efekty prania foteli samochodowych"
+      }
+    ]
   },
   {
     "id": 3,
@@ -167,7 +226,20 @@ export const services = [
       ]
     ],
     "price": "od 500 zł",
-    "images": ["/assets/services/3.svg", "/assets/services/3-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_3/WhatsApp Image 2026-09-04 at 23.53.59 (1).jpeg",
+        "width": 1200,
+        "height": 1600,
+        "alt": "Wosk i akcesoria do pielęgnacji lakieru"
+      },
+      {
+        "src": "/assets/services/uslugi_3/WhatsApp Image 2026-09-04 at 23.53.59.jpeg",
+        "width": 1152,
+        "height": 2048,
+        "alt": "Aplikacja wosku na lakier"
+      }
+    ]
   },
   {
     "id": 6,
@@ -200,7 +272,20 @@ export const services = [
       ]
     ],
     "price": "od 700 zł",
-    "images": ["/assets/services/6.svg", "/assets/services/6-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_6/WhatsApp Image 2026-09-04 at 23.53.36.jpeg",
+        "width": 1152,
+        "height": 2048,
+        "alt": "Przygotowanie powłoki ceramicznej"
+      },
+      {
+        "src": "/assets/services/uslugi_6/WhatsApp Image 2026-09-04 at 23.53.37.jpeg",
+        "width": 1152,
+        "height": 2048,
+        "alt": "Aplikacja powłoki ceramicznej"
+      }
+    ]
   },
   {
     "id": 7,
@@ -217,6 +302,13 @@ export const services = [
       ]
     ],
     "price": "od 200 zł",
-    "images": ["/assets/services/7.svg", "/assets/services/7-2.svg"]
+    "images": [
+      {
+        "src": "/assets/services/uslugi_7.jpeg",
+        "width": 1920,
+        "height": 1920,
+        "alt": "Skórzana tapicerka i elementy wnętrza podczas pielęgnacji"
+      }
+    ]
   }
 ];
