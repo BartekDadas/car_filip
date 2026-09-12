@@ -1,80 +1,39 @@
+import ServiceGallery from '../../components/ServiceGallery';
 import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Footer from '../main-landing-page/components/Footer';
-import Icon from '../../components/AppIcon';
+import { services } from '../../data/services';
 
-const ItemDetails = () => {
+export default function ItemDetails() {
   const { id } = useParams();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  const service = services.find((item) => String(item.id) === id);
+  useEffect(() => { window.scrollTo(0, 0); }, [id]);
   return (
     <div className="min-h-screen bg-background flex flex-col">
-
-      <main className="flex-grow pt-12 pb-20 lg:pt-16 lg:pb-32">
+      <main className="flex-1 py-10 sm:py-16 lg:py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <Link to="/" className="inline-flex items-center space-x-2 text-text-secondary hover:text-primary smooth-transition mb-8 group">
-            <Icon name="ArrowLeft" size={20} className="group-hover:-translate-x-1 smooth-transition" />
-            <span className="font-medium tracking-wide uppercase text-sm">Powrót</span>
-          </Link>
-
-          <div className="bg-card rounded-3xl p-8 md:p-12 luxury-gradient-border relative overflow-hidden">
-            
-            {/* Subtle decorative glow */}
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-
-            <div className="relative z-10">
-              <div className="lux-divider mb-6"></div>
-              <p className="text-primary text-xs sm:text-sm font-medium tracking-[0.2em] uppercase mb-4 font-sans">
-                Szczegóły Usługi
-              </p>
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-tight tracking-tight uppercase">
-                Usługa <span className="text-transparent bg-gradient-to-r from-primary via-white to-secondary bg-clip-text">{id}</span>
-              </h1>
-
-              <div className="prose prose-invert prose-lg max-w-none text-text-secondary font-sans space-y-6">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </p>
-                
-                <h3 className="text-xl md:text-2xl font-semibold text-white mt-12 mb-4 font-serif">Proces Realizacji</h3>
-                
-                <p>
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                </p>
-                
-                <ul className="list-disc pl-5 space-y-2 marker:text-primary">
-                  <li>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</li>
-                  <li>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</li>
-                  <li>Consectetur adipisci velit sed quia non numquam eius modi</li>
-                  <li>Tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem</li>
-                </ul>
-                
-                <p>
-                  Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.
-                </p>
+          <a href="/#oferta" className="inline-flex min-h-[48px] items-center text-primary mb-6 underline underline-offset-4">← Wszystkie usługi</a>
+          {!service ? <h1 className="text-3xl text-foreground">Nie znaleziono usługi</h1> : (
+            <article className="bg-card rounded-2xl overflow-hidden border border-primary/20">
+              <ServiceGallery images={service.images} detailed />
+              <div className="p-6 sm:p-10 lg:p-12">
+                <p className="text-primary text-xs uppercase tracking-widest mb-4">Szczegóły usługi</p>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-8 break-words">{service.title}</h1>
+                <div className="text-text-secondary leading-relaxed space-y-5">{service.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+                <h2 className="text-2xl font-serif text-foreground mt-10 mb-5">Cennik</h2>
+                <dl className="divide-y divide-white/10">{service.prices.map(([label, price]) => (
+                  <div key={label} className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-6 py-4">
+                    <dt className="text-text-secondary min-w-0">{label}</dt>
+                    <dd className="text-primary font-semibold sm:text-right sm:max-w-[45%] sm:shrink-0">{price}</dd>
+                  </div>
+                ))}</dl>
+                <a href="/#kontakt" className="mt-8 flex min-h-[48px] items-center justify-center text-center px-5 py-4 bg-primary text-black font-bold rounded-xl hover:bg-secondary">Zapytaj o wycenę</a>
               </div>
-
-              <div className="mt-12 pt-8 border-t border-white/10 flex justify-center">
-                <a
-                  href="tel:+48123456789"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-primary text-black font-bold uppercase tracking-widest text-sm hover:bg-secondary smooth-transition rounded-xl w-full sm:w-auto"
-                >
-                  Zadzwoń i zarezerwuj
-                </a>
-              </div>
-
-            </div>
-          </div>
+            </article>
+          )}
         </div>
       </main>
-
       <Footer />
     </div>
   );
-};
-
-export default ItemDetails;
+}
