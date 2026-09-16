@@ -7,25 +7,25 @@ const KontaktSection = () => {
         {
             icon: 'Phone',
             label: 'Telefon',
-            value: '+48 123 456 789',
-            href: 'tel:+48123456789',
+            value: '+48 534992730',
+            href: 'tel:+48534992730',
         },
         {
             icon: 'Mail',
             label: 'E-mail',
-            value: 'kontakt@velorautospa.pl',
-            href: 'mailto:kontakt@velorautospa.pl',
+            value: 'velor@onet.pl',
+            href: 'mailto:velor@onet.pl',
         },
         {
             icon: 'MapPin',
             label: 'Lokalizacja',
-            value: 'Warszawa i okolice',
+            value: 'Świdnica ul Ofiar Oświęcimskich 26b',
             href: null,
         },
         {
             icon: 'Clock',
             label: 'Godziny pracy',
-            value: 'Pon–Pt: 8:00–18:00, Sob: 9:00–16:00',
+            value: 'Pon–Pt: 10:00–18:00, Sob: 11:00–16:00',
             href: null,
         },
     ];
