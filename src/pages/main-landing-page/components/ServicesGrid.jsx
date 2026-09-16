@@ -1,24 +1,21 @@
+import ServiceGallery from '../../../components/ServiceGallery';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { services } from '../../../data/services';
 
 export default function ServicesGrid() {
   return (
-    <section id="oferta" className="py-20 lg:py-32 bg-background">
+    <section id="oferta" className="revealed py-20 lg:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <div className="lux-divider mb-6" />
           <h2 className="section-heading">Nasze Usługi</h2>
           <p className="section-subheading">Odkryj naszą pełną ofertę profesjonalnego detailingu.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {services.map((service) => (
             <article key={service.id} className="min-w-0 bg-card rounded-2xl overflow-hidden border border-primary/20 flex flex-col">
-              <div className="grid grid-cols-2 gap-px bg-white/10">
-                {service.images.map((src) => (
-                  <img key={src} src={src} alt="" loading="lazy" width="640" height="400" className="w-full min-w-0 aspect-[8/5] object-cover" />
-                ))}
-              </div>
+              <ServiceGallery images={service.images} />
               <div className="p-6 sm:p-8 flex flex-col flex-1">
                 <h3 className="text-xl font-bold text-foreground mb-3 font-serif">{service.title}</h3>
                 <p className="text-text-secondary leading-relaxed text-sm mb-6 flex-1">{service.summary}</p>
