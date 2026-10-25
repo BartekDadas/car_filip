@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import StickyNavigationBar from '../../components/ui/StickyNavigationBar';
 import HeroSection from './components/HeroSection';
 import ProcessSection from './components/ProcessSection';
@@ -13,6 +14,20 @@ const MainLandingPage = () => {
   const [showUI, setShowUI] = useState(false);
   const [showNaszaPraca, setShowNaszaPraca] = useState(false);
   const [isNewUser, setIsNewUser] = useState(false);
+  const location = useLocation();
+
+  // Wejście z podstrony na /#sekcja — przewiń do sekcji z odstępem na pasek nawigacji
+  useEffect(() => {
+    if (!location.hash) return;
+    const timer = setTimeout(() => {
+      const el = document.getElementById(location.hash.slice(1));
+      if (!el) return;
+      const header = document.getElementById('velor-header');
+      const offset = header ? header.getBoundingClientRect().height + 24 : 96;
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [location.hash]);
 
   useEffect(() => {
     const isReturningUser = localStorage.getItem('visited') === 'true';

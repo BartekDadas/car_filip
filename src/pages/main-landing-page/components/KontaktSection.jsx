@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
+import { BUSINESS, MAPS } from '../../../data/site';
 
 const KontaktSection = () => {
+    const [showMap, setShowMap] = useState(false);
     const contactInfo = [
         {
             icon: 'Phone',
@@ -19,8 +21,9 @@ const KontaktSection = () => {
         {
             icon: 'MapPin',
             label: 'Lokalizacja',
-            value: 'Świdnica ul Ofiar Oświęcimskich 26b',
-            href: null,
+            value: `${BUSINESS.street}, ${BUSINESS.city}`,
+            href: MAPS.open,
+            external: true,
         },
         {
             icon: 'Clock',
@@ -58,6 +61,7 @@ const KontaktSection = () => {
                                     {item.href ? (
                                         <a
                                             href={item.href}
+                                            {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                             className="text-foreground font-medium hover:text-primary smooth-transition font-sans"
                                         >
                                             {item.value}
@@ -69,6 +73,49 @@ const KontaktSection = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Mapa i dojazd — mapa Google wczytywana dopiero po kliknięciu (prywatność, szybkość) */}
+                <div className="mb-12 bg-card rounded-2xl overflow-hidden luxury-gradient-border">
+                    <div className="relative aspect-[16/10] sm:aspect-[16/8] bg-muted">
+                        {showMap ? (
+                            <iframe
+                                src={MAPS.embed}
+                                title={`Mapa dojazdu — ${BUSINESS.name}, ${BUSINESS.street}, ${BUSINESS.city}`}
+                                className="absolute inset-0 w-full h-full border-0"
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                allowFullScreen
+                            />
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={() => setShowMap(true)}
+                                className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-3 text-center px-6 group"
+                            >
+                                <span className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 smooth-transition">
+                                    <Icon name="MapPin" size={26} className="text-primary" />
+                                </span>
+                                <span className="text-foreground font-semibold font-sans">Pokaż mapę</span>
+                                <span className="text-text-secondary text-xs font-sans max-w-xs">Mapa wczyta się z Google Maps. <a href="/polityka-prywatnosci" className="underline hover:text-foreground" onClick={(e) => e.stopPropagation()}>Prywatność</a></span>
+                            </button>
+                        )}
+                    </div>
+                    <div className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <p className="text-foreground font-medium font-sans">{BUSINESS.street}, {BUSINESS.city}</p>
+                            <p className="text-text-secondary text-sm font-sans">{BUSINESS.hours}</p>
+                        </div>
+                        <a
+                            href={MAPS.directions}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex min-h-[48px] items-center justify-center gap-2 px-6 rounded-full bg-[#0b0b0c] border border-white/15 text-white font-semibold hover:bg-black smooth-transition whitespace-nowrap"
+                        >
+                            <Icon name="Navigation" size={18} />
+                            Nawiguj
+                        </a>
+                    </div>
                 </div>
 
                 {/* Trust cue + CTA */}
@@ -98,8 +145,8 @@ const KontaktSection = () => {
                         <p className="text-sm text-text-secondary mb-4 font-sans">Śledź nas</p>
                         <div className="flex justify-center space-x-3">
                             {[
-                                { name: 'Instagram', icon: 'Instagram', href: 'https://instagram.com/velorautospa' },
-                                { name: 'Facebook', icon: 'Facebook', href: 'https://facebook.com/velorautospa' },
+                                { name: 'Instagram', icon: 'Instagram', href: 'https://www.instagram.com/velor_swidnica/' },
+                                { name: 'Facebook', icon: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61579226108714' },
                             ].map((social) => (
                                 <a
                                     key={social.name}

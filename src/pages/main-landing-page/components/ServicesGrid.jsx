@@ -2,6 +2,7 @@ import ServiceGallery from '../../../components/ServiceGallery';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { services } from '../../../data/services';
+import { servicePath } from '../../../data/site';
 
 export default function ServicesGrid() {
   return (
@@ -12,15 +13,15 @@ export default function ServicesGrid() {
           <h2 className="section-heading">Nasze Usługi</h2>
           <p className="section-subheading">Odkryj naszą pełną ofertę profesjonalnego detailingu.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6 max-w-5xl mx-auto">
           {services.map((service) => (
             <article key={service.id} className="min-w-0 bg-card rounded-2xl overflow-hidden border border-primary/20 flex flex-col">
-              <ServiceGallery images={service.images} />
-              <div className="p-6 sm:p-8 flex flex-col flex-1">
+              <ServiceGallery images={service.images} uniform />
+              <div className="p-5 sm:p-6 flex flex-col flex-1">
                 <h3 className="text-xl font-bold text-foreground mb-3 font-serif">{service.title}</h3>
-                <p className="text-text-secondary leading-relaxed text-sm mb-6 flex-1">{service.summary}</p>
+                <p className="text-text-secondary leading-relaxed text-sm mb-5 flex-1">{service.summary}</p>
                 <p className="text-primary font-semibold mb-4">{service.price}</p>
-                <Link to={`/item/${service.id}`} aria-label={`Więcej: ${service.title}`} className="inline-flex min-h-[48px] items-center justify-center px-4 py-3 border border-primary/30 text-primary font-semibold text-sm uppercase tracking-widest hover:bg-primary hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-lg smooth-transition">Więcej</Link>
+                <Link to={servicePath(service.id)} aria-label={`Więcej: ${service.title}`} className="inline-flex min-h-[48px] items-center justify-center px-4 py-3 border border-primary/30 text-primary font-semibold text-sm uppercase tracking-widest hover:bg-primary hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-lg smooth-transition">Więcej</Link>
               </div>
             </article>
           ))}

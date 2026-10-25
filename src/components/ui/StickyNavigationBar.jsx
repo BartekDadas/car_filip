@@ -1,281 +1,297 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from '../AppIcon';
-import Button from './Button';
+import { services } from '../../data/services';
+import { BUSINESS, servicePath } from '../../data/site';
+
+// Pasek nawigacji wzorowany na układzie meritoros.pl: pływająca biała "pigułka",
+// logo po lewej, menu z rozwijanymi listami na środku, przyciski po prawej.
+const CONTACT = {
+  phoneLabel: BUSINESS.phoneLabel,
+  phoneHref: BUSINESS.phoneHref,
+  email: BUSINESS.email,
+  emailHref: `mailto:${BUSINESS.email}`,
+  instagram: BUSINESS.instagram,
+  facebook: BUSINESS.facebook,
+};
+
+const navItems = [
+  {
+    label: 'Usługi',
+    children: services.map((service) => ({ label: service.title, to: servicePath(service.id) })),
+  },
+  { label: 'Proces', section: 'proces' },
+  { label: 'Realizacje', section: 'portfolio' },
+  { label: 'Zespół', section: 'nasz-zespol' },
+  {
+    label: 'Kontakt',
+    children: [
+      { label: CONTACT.phoneLabel, href: CONTACT.phoneHref, icon: 'Phone' },
+      { label: CONTACT.email, href: CONTACT.emailHref, icon: 'Mail' },
+      { label: 'Instagram', href: CONTACT.instagram, icon: 'Instagram', external: true },
+      { label: 'Facebook', href: CONTACT.facebook, icon: 'Facebook', external: true },
+      { label: 'Formularz kontaktowy', section: 'kontakt', icon: 'MessageSquare' },
+    ],
+  },
+];
 
 const StickyNavigationBar = ({ showUI = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  const contactRef = useRef(null);
+  const [openAccordion, setOpenAccordion] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (contactRef.current && !contactRef.current.contains(event.target)) {
-        setIsContactOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const sections = [
-    { id: 'proces', label: 'Proces' },
-    { id: 'portfolio', label: 'Realizacje' },
-    { id: 'nasz-zespol', label: 'Zespół' },
-    { id: 'oferta', label: 'Oferta' },
-    { id: 'kontakt', label: 'Kontakt' },
-  ];
-
-  const midPoint = Math.ceil(sections.length / 2);
-  const leftSections = sections.slice(0, midPoint);
-  const rightSections = sections.slice(midPoint);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 120 && rect.bottom >= 120;
-        }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection.id);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 60);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
+    if (!isMenuOpen) setOpenAccordion(null);
   }, [isMenuOpen]);
 
+  const closeMenu = () => setIsMenuOpen(false);
+
   const scrollToSection = (sectionId) => {
+    // Na podstronach (usługi, polityka) wracamy na stronę główną do danej sekcji
+    if (location.pathname !== '/') {
+      closeMenu();
+      navigate(`/#${sectionId}`);
+      return;
+    }
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      const header = document.getElementById('velor-header');
+      const offset = header ? header.getBoundingClientRect().height + 24 : 96;
+      const top = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
-    setIsMenuOpen(false);
+    closeMenu();
+  };
+
+  // Jeden element listy rozwijanej (desktop i mobile różnią się tylko klasami)
+  const renderChild = (child, className) => {
+    const content = (
+      <>
+        {child.icon && <Icon name={child.icon} size={16} className="shrink-0 text-slate-500" />}
+        <span>{child.label}</span>
+      </>
+    );
+    const classes = `flex items-center gap-2.5 ${className}`;
+
+    if (child.to) {
+      return (
+        <Link key={child.label} to={child.to} className={classes} onClick={closeMenu}>
+          {content}
+        </Link>
+      );
+    }
+    if (child.section) {
+      return (
+        <button key={child.label} type="button" onClick={() => scrollToSection(child.section)} className={`${classes} w-full text-left`}>
+          {content}
+        </button>
+      );
+    }
+    return (
+      <a
+        key={child.label}
+        href={child.href}
+        className={classes}
+        onClick={closeMenu}
+        {...(child.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        {content}
+      </a>
+    );
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      {/* Scrolled background - separate layer to avoid blur issues */}
-      <div className={`absolute inset-0 transition-all duration-300 ${isScrolled ? 'bg-background/95 shadow-lg shadow-black/20 lg:bg-white/95 lg:shadow-sm lg:shadow-black/5' : 'bg-transparent lg:bg-white'}`} style={{ backdropFilter: isScrolled ? 'blur(20px)' : 'none', WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none' }}></div>
-      <div className="relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center justify-between h-[150px]">
-            {/* Left Links */}
-            <div className="flex items-center space-x-4 flex-1">
-              {leftSections.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
-                    ? 'text-black bg-black/5'
-                    : 'text-black hover:bg-black/5'
-                    }`}
-                >
-                  {section.label}
-                </button>
-              ))}
+    <header
+      id="velor-header"
+      className={`fixed top-4 left-0 right-0 z-[100] px-4 sm:px-6 lg:px-12 w-full max-w-[1400px] mx-auto transition-opacity duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+    >
+      <div
+        className={`backdrop-blur-md rounded-full px-5 sm:px-6 py-3 flex items-center transition-[background-color,box-shadow] duration-300 ${isScrolled ? 'bg-white/[0.98] shadow-[0_4px_24px_0_rgba(0,0,0,0.10)]' : 'bg-white/95 shadow-lg shadow-black/5'}`}
+      >
+        {/* Logo */}
+        <button
+          type="button"
+          onClick={() => {
+            closeMenu();
+            if (location.pathname !== '/') navigate('/');
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex items-center shrink-0"
+          aria-label="Velor Detailing & Protection — przewiń na górę"
+        >
+          <img
+            src="/assets/logo.png"
+            alt="Velor Detailing & Protection"
+            className="h-10 lg:h-11 w-auto block invert grayscale contrast-[1.1]"
+            loading="eager"
+          />
+        </button>
 
-              {/* Social Icons Desktop */}
-              <div className="flex items-center space-x-2 ml-2 pl-4 border-l border-black/20">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-black hover:text-black/70 smooth-transition p-2 hover:bg-black/5 rounded-full" aria-label="Facebook">
-                  <Icon name="Facebook" size={18} />
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-black hover:text-black/70 smooth-transition p-2 hover:bg-black/5 rounded-full" aria-label="Instagram">
-                  <Icon name="Instagram" size={18} />
-                </a>
-              </div>
-            </div>
-
-            {/* Center Logo */}
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center hover-scale mx-8"
-            >
-              <img
-                src="/assets/logo.png"
-                alt="Velor Auto Spa"
-                className="h-[110px] w-auto invert contrast-[1.1] brightness-[1.1] grayscale opacity-100"
-              />
-            </button>
-
-            {/* Right Links + Phone */}
-            <div className="flex items-center justify-end space-x-4 flex-1">
-              {rightSections.map((section) => (
+        {/* Desktop: menu */}
+        <nav className="hidden lg:flex flex-1 items-center justify-center gap-4 xl:gap-7 text-[15px] xl:text-[17px] text-slate-900 font-medium" aria-label="Menu główne">
+          {navItems.map((item) =>
+            item.children ? (
+              <div key={item.label} className="relative group shrink-0">
                 <button
-                  key={section.id}
-                  onClick={() => scrollToSection(section.id)}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg smooth-transition ${activeSection === section.id
-                    ? 'text-black bg-black/5'
-                    : 'text-black hover:bg-black/5'
-                    }`}
+                  type="button"
+                  aria-haspopup="true"
+                  className="flex items-center gap-1.5 hover:text-slate-600 transition-colors py-4 -my-4 whitespace-nowrap"
                 >
-                  {section.label}
+                  {item.label}
+                  <Icon name="ChevronDown" size={16} strokeWidth={1.5} className="text-slate-400 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
                 </button>
-              ))}
-              <div className="h-4 w-[1px] bg-black/20 mx-2"></div>
-              <div className="relative" ref={contactRef}>
-                <button
-                  onClick={() => setIsContactOpen(!isContactOpen)}
-                  className="flex items-center space-x-2 bg-black text-white hover:bg-black/90 smooth-transition px-4 py-2 rounded-lg font-bold text-sm tracking-widest uppercase ml-2"
-                >
-                  <Icon name="Phone" size={16} />
-                  <span className="whitespace-nowrap">Zadzwoń</span>
-                </button>
-                
-                {isContactOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-2xl border border-black/10 overflow-hidden flex flex-col p-2">
-                    <a href="tel:+48123456789" className="flex items-center space-x-3 p-3 hover:bg-black/5 rounded-lg smooth-transition group">
-                      <div className="bg-black/5 p-2 rounded-full group-hover:bg-black/10 smooth-transition">
-                        <Icon name="Phone" size={18} className="text-black" />
-                      </div>
-                      <div className="flex flex-col text-left">
-                        <span className="text-[10px] text-black/50 uppercase tracking-wider font-semibold">Telefon</span>
-                        <span className="text-black font-bold text-sm">+48 123 456 789</span>
-                      </div>
-                    </a>
-                    <a href="mailto:kontakt@velorautospa.pl" className="flex items-center space-x-3 p-3 hover:bg-black/5 rounded-lg smooth-transition group">
-                      <div className="bg-black/5 p-2 rounded-full group-hover:bg-black/10 smooth-transition">
-                        <Icon name="Mail" size={18} className="text-black" />
-                      </div>
-                      <div className="flex flex-col text-left">
-                        <span className="text-[10px] text-black/50 uppercase tracking-wider font-semibold">E-mail</span>
-                        <span className="text-black font-bold text-sm">kontakt@velorautospa.pl</span>
-                      </div>
-                    </a>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all z-50 w-[280px]">
+                  <div className="bg-[#f2f4f6] rounded-[2rem] p-3 flex flex-col gap-0.5 shadow-xl shadow-black/5 border border-white/60">
+                    {item.children.map((child) =>
+                      renderChild(child, 'px-4 py-2.5 rounded-2xl text-slate-900 hover:bg-white hover:shadow-sm transition-colors text-[16px]')
+                    )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
+            ) : (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => scrollToSection(item.section)}
+                className="flex items-center gap-1.5 hover:text-slate-600 transition-colors py-4 -my-4 whitespace-nowrap shrink-0"
+              >
+                {item.label}
+                <span className="w-4 h-4 shrink-0" aria-hidden="true"></span>
+              </button>
+            )
+          )}
+        </nav>
 
-          {/* Mobile Navigation */}
-          <div className="flex items-center justify-between h-[91px] lg:hidden">
-            {/* Logo */}
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center hover-scale"
+        {/* Desktop: przyciski po prawej */}
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-1 px-1.5 py-1 rounded-full border border-slate-200">
+            <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-1.5 rounded-full text-slate-700 hover:bg-[#f2f4f6] transition-colors">
+              <Icon name="Instagram" size={18} strokeWidth={1.5} />
+            </a>
+            <a href={CONTACT.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="p-1.5 rounded-full text-slate-700 hover:bg-[#f2f4f6] transition-colors">
+              <Icon name="Facebook" size={18} strokeWidth={1.5} />
+            </a>
+          </div>
+          <a
+            href={CONTACT.emailHref}
+            className="hidden xl:flex items-center gap-2 px-5 py-3 rounded-full border border-slate-200 text-slate-700 text-base font-medium hover:border-slate-300 hover:bg-white transition-colors whitespace-nowrap"
           >
-            <div className="relative flex items-center justify-center px-1">
-              <img
-                src="/assets/logo.png"
-                alt="Velor Auto Spa"
-                className="relative h-[71px] w-auto rounded-xl m-2.5"
-              />
-            </div>
-          </button>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-text-secondary hover:text-primary smooth-transition"
-            >
-              <Icon name={isMenuOpen ? "X" : "Menu"} size={24} />
-            </button>
-          </div>
+            <Icon name="Mail" size={16} strokeWidth={1.5} />
+            Napisz
+          </a>
+          <a
+            href={CONTACT.phoneHref}
+            className="flex items-center gap-2 bg-black text-white px-7 py-3 rounded-full text-base font-medium hover:bg-black/80 transition-colors whitespace-nowrap"
+          >
+            <Icon name="Phone" size={16} strokeWidth={1.5} />
+            Zadzwoń
+          </a>
         </div>
+
+        {/* Mobile: hamburger */}
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="lg:hidden ml-auto text-slate-900"
+          aria-expanded={isMenuOpen}
+          aria-controls="velor-mobile-menu"
+          aria-label={isMenuOpen ? 'Zamknij menu' : 'Otwórz menu'}
+        >
+          <Icon name={isMenuOpen ? 'X' : 'Menu'} size={28} strokeWidth={1.5} />
+        </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile: rozwijane menu pod paskiem */}
       {isMenuOpen && (
-        <div
-          className="
-            lg:hidden fixed left-0 right-0 top-0 z-[999]
-            h-[calc(100dvh+24px)] min-h-[calc(100dvh+24px)]
-            overflow-y-auto overscroll-contain
-            bg-background/80 backdrop-blur-2xl
-            supports-[backdrop-filter]:bg-background/65
-            border-b border-white/10
-          "
-          style={{
-            WebkitBackdropFilter: 'blur(28px)',
-            backdropFilter: 'blur(28px)',
-            paddingBottom: 'calc(env(safe-area-inset-bottom) + 48px)',
-          }}
-        >
-          {/* Mobile menu header */}
-          <div className="sticky top-0 z-10 flex items-center justify-between h-28 px-4 bg-background/40 backdrop-blur-xl">
-            <button
-              onClick={() => {
-                setIsMenuOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="flex items-center hover-scale"
-            >
-              <div className="relative flex items-center justify-center px-1">
-                <img
-                  src="/assets/logo.png"
-                  alt="Velor Auto Spa"
-                  className="relative h-[92px] w-auto rounded-xl m-2.5"
-                />
-              </div>
-            </button>
-
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="p-2 rounded-lg text-white hover:text-white/80 smooth-transition"
-            >
-              <Icon name="X" size={28} />
-            </button>
-          </div>
-
-          <div className="px-6 pt-10 pb-24 space-y-3">
-            {sections.map((section) => (
+        <>
+          <div className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-[2px] z-[-1]" onClick={closeMenu} aria-hidden="true"></div>
+          <div id="velor-mobile-menu" className="lg:hidden mt-3 bg-[#f2f4f6]/95 backdrop-blur-md rounded-3xl px-6 py-6 shadow-xl max-h-[80svh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs uppercase tracking-widest font-bold text-slate-400">Menu</span>
               <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`w-full text-left px-4 py-4 smooth-transition text-lg font-medium ${activeSection === section.id
-                  ? 'text-white border-l-2 border-white pl-6'
-                  : 'text-white hover:text-white/80 hover:pl-6'
-                  }`}
+                type="button"
+                onClick={closeMenu}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200/70 hover:bg-slate-300 transition-colors"
+                aria-label="Zamknij menu"
               >
-                {section.label}
+                <Icon name="X" size={16} strokeWidth={2} className="text-slate-700" />
               </button>
-            ))}
+            </div>
 
-            <div className="pt-8 mt-6 border-t border-border space-y-4">
-              <div className="flex items-center space-x-4 px-4 pb-2">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-3 -ml-3 rounded-full bg-white/5 text-white hover:text-white/80 hover:bg-white/10 smooth-transition" aria-label="Facebook">
-                  <Icon name="Facebook" size={24} />
+            <nav className="flex flex-col gap-1 text-slate-900 text-base font-medium" aria-label="Menu mobilne">
+              {navItems.map((item) =>
+                item.children ? (
+                  <div key={item.label}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenAccordion(openAccordion === item.label ? null : item.label)}
+                      className="w-full flex items-center justify-between py-2.5 px-2 rounded-xl hover:bg-white/60 transition-colors"
+                      aria-expanded={openAccordion === item.label}
+                    >
+                      <span>{item.label}</span>
+                      <Icon name="ChevronDown" size={16} strokeWidth={1.5} className={`text-slate-400 transition-transform duration-200 ${openAccordion === item.label ? 'rotate-180' : ''}`} />
+                    </button>
+                    {openAccordion === item.label && (
+                      <div className="pl-4 flex flex-col gap-1 mt-1 mb-2">
+                        {item.children.map((child) =>
+                          renderChild(child, 'py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-colors text-sm font-normal')
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => scrollToSection(item.section)}
+                    className="text-left py-2.5 px-2 rounded-xl hover:bg-white/60 hover:text-slate-600 transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                )
+              )}
+
+              <div className="mt-3 pt-3 border-t border-slate-200 flex flex-col gap-3">
+                <a
+                  href={CONTACT.emailHref}
+                  onClick={closeMenu}
+                  className="flex items-center justify-center gap-2 border border-slate-200 text-slate-700 px-6 py-3 rounded-full text-center font-medium hover:border-slate-300 transition-colors"
+                >
+                  <Icon name="Mail" size={16} strokeWidth={1.5} />
+                  Napisz
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-white/5 text-white hover:text-white/80 hover:bg-white/10 smooth-transition" aria-label="Instagram">
-                  <Icon name="Instagram" size={24} />
+                <a
+                  href={CONTACT.phoneHref}
+                  onClick={closeMenu}
+                  className="flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-full text-center font-medium hover:bg-black/80 transition-colors"
+                >
+                  <Icon name="Phone" size={16} strokeWidth={1.5} />
+                  Zadzwoń
                 </a>
               </div>
-              <a
-                href="tel:+48123456789"
-                className="flex items-center justify-center w-full bg-black text-white hover:bg-black/80 smooth-transition px-4 py-4 rounded-lg font-bold text-sm tracking-widest uppercase mt-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Zadzwoń
-              </a>
-            </div>
+
+              <div className="mt-3 pt-3 border-t border-slate-200 flex items-center justify-center gap-3">
+                <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-2.5 rounded-full text-slate-700 hover:bg-white/60 transition-colors">
+                  <Icon name="Instagram" size={20} strokeWidth={1.5} />
+                </a>
+                <a href={CONTACT.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="p-2.5 rounded-full text-slate-700 hover:bg-white/60 transition-colors">
+                  <Icon name="Facebook" size={20} strokeWidth={1.5} />
+                </a>
+              </div>
+            </nav>
           </div>
-        </div>
+        </>
       )}
-    </nav>
+    </header>
   );
 };
 

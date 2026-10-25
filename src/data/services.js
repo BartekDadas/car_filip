@@ -1,4 +1,5 @@
 // Original service IDs determine image assignment, independently of display order.
+// "fit": "contain" marks before/after collages — shown whole in grid tiles, never cropped.
 export const services = [
   {
     "id": 5,
@@ -23,12 +24,14 @@ export const services = [
     "images": [
       {
         "src": "/assets/services/uslugi_5/WhatsApp Image 2026-09-04 at 23.48.17 (1).jpeg",
+        "fit": "contain",
         "width": 2048,
         "height": 2048,
         "alt": "Porównanie wnętrza przed i po detailingu"
       },
       {
         "src": "/assets/services/uslugi_5/WhatsApp Image 2026-09-04 at 23.48.17.jpeg",
+        "fit": "contain",
         "width": 2048,
         "height": 2048,
         "alt": "Efekty czyszczenia wnętrza samochodu"
@@ -173,6 +176,7 @@ export const services = [
     "images": [
       {
         "src": "/assets/services/uslugi_4.jpeg",
+        "fit": "contain",
         "width": 1640,
         "height": 2048,
         "alt": "Porównanie wyglądu reflektora przed i po regeneracji"
@@ -196,12 +200,14 @@ export const services = [
     "images": [
       {
         "src": "/assets/services/uslugi_8/WhatsApp Image 2026-09-04 at 23.52.26 (1).jpeg",
+        "fit": "contain",
         "width": 1280,
         "height": 1600,
         "alt": "Porównanie tapicerki przed i po praniu"
       },
       {
         "src": "/assets/services/uslugi_8/WhatsApp Image 2026-09-04 at 23.52.26.jpeg",
+        "fit": "contain",
         "width": 1920,
         "height": 1920,
         "alt": "Efekty prania foteli samochodowych"
@@ -305,6 +311,7 @@ export const services = [
     "images": [
       {
         "src": "/assets/services/uslugi_7.jpeg",
+        "fit": "contain",
         "width": 1920,
         "height": 1920,
         "alt": "Skórzana tapicerka i elementy wnętrza podczas pielęgnacji"
