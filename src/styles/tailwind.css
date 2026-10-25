@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
 @tailwind base;
 @tailwind components;
@@ -194,19 +194,100 @@
     @apply text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed font-sans;
   }
 
+  /* Nagłówek hero — ten sam krój co nagłówki sekcji (Playfair Display, wersaliki),
+     w większej skali; podpis kursywą tego samego kroju. Bez ozdobników i jasnych teł. */
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-title__main {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 7.5vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-title__sub {
+    margin-top: 0.6rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2.8vw, 2.4rem);
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: var(--color-primary);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Przyciski CTA w hero — układ jak u meritoros (pigułki: pełny + "szklany"), w czerni Velor */
+  .hero-cta {
+    @apply inline-flex items-center justify-center gap-2 w-full sm:w-auto sm:min-w-[260px] px-7 py-3.5 rounded-full text-base font-semibold whitespace-nowrap transition-all duration-300;
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white;
+  }
+
+  .hero-cta {
+    letter-spacing: 0.02em;
+  }
+
+  .hero-cta__icon {
+    flex-shrink: 0;
+    opacity: 0.85;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+  }
+
+  .hero-cta:hover .hero-cta__icon,
+  .hero-cta:focus-visible .hero-cta__icon {
+    opacity: 1;
+  }
+
+  .hero-cta:hover .hero-cta__icon--right,
+  .hero-cta:focus-visible .hero-cta__icon--right {
+    transform: translateX(4px);
+  }
+
+  .hero-cta:hover .hero-cta__icon--down,
+  .hero-cta:focus-visible .hero-cta__icon--down {
+    animation: heroCtaNudge 0.9s ease-in-out infinite;
+  }
+
+  @keyframes heroCtaNudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-cta__icon { transition: none; }
+    .hero-cta:hover .hero-cta__icon--right,
+    .hero-cta:hover .hero-cta__icon--down { transform: none; animation: none; }
+  }
+
+  .hero-cta--primary {
+    @apply bg-[#0b0b0c] text-white border border-white/10 hover:bg-black hover:shadow-lg hover:shadow-white/10;
+  }
+
+  .hero-badge {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-white whitespace-nowrap;
+    @apply bg-[#0b0b0c]/55 backdrop-blur-md border border-white/15 shadow-lg shadow-black/25;
+  }
+
+  .hero-cta--ghost {
+    @apply bg-[#0b0b0c]/40 backdrop-blur-md border border-white/20 text-white hover:bg-[#0b0b0c]/60 hover:border-white/30;
+  }
+
+  /* Pełnoekranowe wideo: cover zachowuje proporcje (przycina brzegi zamiast rozciągać) */
   .hero-video {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
-    margin: 0 auto;
-  }
-
-  @media (min-width: 768px) {
-    .hero-video {
-      max-width: 1280px;
-      height: auto;
-      aspect-ratio: 16 / 9;
-    }
   }
 }

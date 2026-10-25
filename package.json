@@ -58,7 +58,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build --sourcemap",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "postbuild": "node --no-warnings scripts/seo-pages.mjs"
   },
   "eslintConfig": {
     "extends": [

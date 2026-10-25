@@ -3,73 +3,93 @@ import { createPortal } from 'react-dom';
 import Button from '../../../components/ui/Button';
 import Icon from '../../../components/AppIcon';
 
-/* ── YouTube Shorts data ──────────────────────────────────────────────── */
+/* ── Nasze rolki (pliki w public/realizacje, 720×1280) ─────────────── */
 const videos = [
     {
         id: 1,
-        ytId: 'vwg0JEOLB_k',
-        title: 'Korekta Lakieru',
-        caption: 'Usunięcie rys i hologramów — blask jak z salonu',
+        slug: 'audi-v8-korekta',
+        title: 'Audi V8 (1993)',
+        caption: 'Korekta lakieru i wosk — klasyk odzyskuje blask',
         tag: 'Korekta',
     },
     {
         id: 2,
-        ytId: 'cth1BI_HYeE',
-        title: 'Detailing Wnętrza',
-        caption: 'Kompleksowe czyszczenie skóry, plastików i tkanin',
-        tag: 'Wnętrze',
+        slug: 'kia-niro-powloka-ppf',
+        title: 'Kia Niro',
+        caption: 'Powłoka ceramiczna i folia PPF w nowym studio',
+        tag: 'Powłoka + PPF',
     },
     {
         id: 3,
-        ytId: 'yKJhrj1xwwU',
-        title: 'Powłoka Ceramiczna',
-        caption: 'Wieloletnia ochrona lakieru i efekt hydrofobowy',
-        tag: 'Ceramika',
-    },
-    {
-        id: 4,
-        ytId: '8B5cu5L0ZbY',
-        title: 'Oklejanie PPF',
-        caption: 'Fizyczna tarcza przed odpryskami i zarysowaniami',
+        slug: 'mercedes-folia-lampy',
+        title: 'Mercedes E Coupe',
+        caption: 'Folia ochronna na reflektory',
         tag: 'PPF',
     },
     {
+        id: 4,
+        slug: 'volvo-xc60-pakiet',
+        title: 'Volvo XC60',
+        caption: 'Pełen pakiet detailingu',
+        tag: 'Pełen pakiet',
+    },
+    {
         id: 5,
-        ytId: '85-Q6WOQqWI',
-        title: 'Mycie Detailingowe',
-        caption: 'Bezpieczne mycie bez mikrorys, z dekontaminacją',
+        slug: 'audi-ppf-wnetrze',
+        title: 'Audi — wnętrze',
+        caption: 'Folia PPF na elementy wnętrza',
+        tag: 'PPF wnętrza',
+    },
+    {
+        id: 6,
+        slug: 'mg-pierwsze-mycie',
+        title: 'MG',
+        caption: 'Pierwsze mycie po powłoce ceramicznej',
         tag: 'Mycie',
+    },
+    {
+        id: 7,
+        slug: 'skoda-przed-po',
+        title: 'Skoda',
+        caption: 'Odświeżenie auta — przed i po',
+        tag: 'Przed i po',
     },
 ];
 
 const CARD_W = 280; // px — active card width
 const GAP    = 20;  // px — gap between cards
 
-/* ── Individual Video Card (YouTube Shorts embed) ────────────────────── */
+/* ── Individual Video Card (własne wideo) ────────────────────────────── */
 const VideoCard = ({ video, isActive }) => {
-    // Build embed URL: autoplay when active, loop, muted, minimal controls
-    const embedUrl = isActive
-        ? `https://www.youtube.com/embed/${video.ytId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${video.ytId}&playsinline=1&rel=0&modestbranding=1`
-        : null;
+    const [isMuted, setIsMuted] = useState(true);
+    const poster = `/realizacje/${video.slug}.jpg`;
+
+    // Po zmianie aktywnej karty wracamy do wyciszenia
+    useEffect(() => {
+        if (!isActive) setIsMuted(true);
+    }, [isActive]);
 
     return (
         <div className="relative w-full h-full rounded-2xl overflow-hidden bg-zinc-900 luxury-gradient-border">
-            {/* YouTube iframe — only loaded when active to avoid 5 iframes at once */}
+            {/* Wideo ładowane tylko w aktywnej karcie — pozostałe pokazują okładkę */}
             {isActive ? (
-                <iframe
-                    src={embedUrl}
-                    className="w-full h-full"
-                    allow="autoplay; fullscreen"
-                    frameBorder="0"
-                    title={video.title}
-                    style={{ border: 'none' }}
+                <video
+                    src={`/realizacje/${video.slug}.mp4`}
+                    poster={poster}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    preload="auto"
+                    aria-label={`${video.title} — ${video.caption}`}
                 />
             ) : (
-                /* Thumbnail placeholder for inactive cards */
                 <img
-                    src={`https://img.youtube.com/vi/${video.ytId}/oar2.jpg`}
+                    src={poster}
                     alt={video.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                     draggable={false}
                 />
             )}
@@ -83,6 +103,18 @@ const VideoCard = ({ video, isActive }) => {
                     {video.tag}
                 </span>
             </div>
+
+            {/* Dźwięk */}
+            {isActive && (
+                <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); setIsMuted((m) => !m); }}
+                    className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/75 smooth-transition"
+                    aria-label={isMuted ? 'Włącz dźwięk' : 'Wycisz'}
+                >
+                    <Icon name={isMuted ? 'VolumeX' : 'Volume2'} size={18} />
+                </button>
+            )}
 
             {/* Caption */}
             <div className="absolute bottom-0 left-0 right-0 p-5 z-10 pointer-events-none">
@@ -247,6 +279,7 @@ const BeforeAfterSection = ({ isNewUser = false }) => {
                           <div><label className="block text-xs sm:text-sm font-medium text-text-secondary mb-1">Twoje auto</label><input required type="text" placeholder="np. BMW Seria 3, 2020" className="w-full px-4 py-2 text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-primary smooth-transition" /></div>
                           <div><label className="block text-xs sm:text-sm font-medium text-text-secondary mb-1">Co chcesz umyć i dodatkowe pytania</label><textarea required rows="4" className="w-full px-4 py-2 text-sm bg-background border border-border rounded-lg text-foreground focus:outline-none focus:border-primary smooth-transition" /></div>
                           <div className="pt-6"><Button type="submit" className="w-full bg-primary hover:bg-secondary text-primary-foreground font-semibold py-3">Wyślij zapytanie</Button></div>
+                          <p className="text-xs text-text-secondary leading-relaxed">Wysyłając formularz, przekazujesz nam dane potrzebne do przygotowania wyceny i kontaktu w tej sprawie. Szczegóły w <a href="/polityka-prywatnosci" target="_blank" rel="noopener" className="underline hover:text-foreground">polityce prywatności</a>.</p>
                       </form>
                   </div>
               </div>,
@@ -279,7 +312,7 @@ const BeforeAfterSection = ({ isNewUser = false }) => {
                     ───────────────────────────────────────────────── */}
                     <div
                         ref={trackRef}
-                        className="w-full"
+                        className="w-full relative"
                         style={{
                             overflowX: isMobile ? 'scroll' : 'hidden',
                             scrollSnapType: isMobile ? 'x mandatory' : 'none',
